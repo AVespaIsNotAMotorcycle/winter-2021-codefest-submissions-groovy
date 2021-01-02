@@ -3,17 +3,7 @@
   <head>
     <title>Example of the Authorization Code flow with Spotify</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <style type="text/css">
-      #login, #loggedin {
-        display: none;
-      }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
@@ -92,7 +82,7 @@
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
             oauthPlaceholder = document.getElementById('oauth');
-            
+
         var recsSource = document.getElementById('recs-template').innerHTML,
             recsTemplate = Handlebars.compile(recsSource),
             recsPlaceholder = document.getElementById('recs');
@@ -153,7 +143,7 @@
                   'Authorization': 'Bearer ' + access_token
                 }
             }).done(function(data) {
-              
+
             });
           }, false);
 
@@ -176,4 +166,3 @@
     </script>
   </body>
 </html>
-

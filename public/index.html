@@ -131,11 +131,7 @@
             $.ajax({
               type: 'POST',
               url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
-              data: {
-                "name": "New Playlist",
-                "description": "New playlist description",
-                "public": false
-              },
+              data: JSON.stringify({name: "Groovy", public: false}),
               contentType: "application/json",
               headers: {
                   //'Accept': 'application/json',

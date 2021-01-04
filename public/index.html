@@ -26,6 +26,22 @@
     <script id="recs-template" type="text/x-handlebars-template">
       <h1>Get Recommendations</h1>
       <button class="btn btn-default" id="get-recs">Obtain Recommendations</button>
+      <div id="top-artists"></div>
+    </script>
+
+    <script id="top-artists-template" type="text/x-handlebars-template">
+      <dl class="dl-horizontal">
+        <dt>Top Artists: </dt><dd>{{items.0.name}}</dd>
+        <dt></dt><dd>{{items.1.name}}</dd>
+        <dt></dt><dd>{{items.2.name}}</dd>
+        <dt></dt><dd>{{items.3.name}}</dd>
+        <dt></dt><dd>{{items.4.name}}</dd>
+        <dt></dt><dd>{{items.5.name}}</dd>
+        <dt></dt><dd>{{items.6.name}}</dd>
+        <dt></dt><dd>{{items.7.name}}</dd>
+        <dt></dt><dd>{{items.8.name}}</dd>
+        <dt></dt><dd>{{items.9.name}}</dd>
+      </dl>
     </script>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
@@ -129,18 +145,53 @@
 
           document.getElementById('get-recs').addEventListener('click', function() {
             $.ajax({
-              type: 'POST',
-              url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
-              data: JSON.stringify({name: "Groovy", public: false}),
+              type: 'GET',
+              url: 'https://api.spotify.com/v1/me/top/artists',
               contentType: "application/json",
               headers: {
-                  //'Accept': 'application/json',
-                  //'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + access_token
+              },
+              success: function(response) {
+                var topArtistsSource = document.getElementById("top-artists-template").innerHTML,
+                    topArtistsTemplate = Handlebars.compile(topArtistsSource),
+                    topArtistsPlaceholder = document.getElementById("top-artists");
+
+                topArtistsPlaceholder.innerHTML = topArtistsTemplate(response);
+
+                var top_artists = response;
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://api.spotify.com/v1/recommendations?' + 
+                            'market=US' + '&' +
+                            'seed_artists=' + response.items[0].id + '%'
+                                            + response.items[1].id + '&' +
+                            'seed_genres=' + 'australian indie' + '&' +
+                            'seed_tracks=' + '0c6xIDDpzE81m2q797ordA',
+                    contentType: "application/json",
+                    headers: {
+                        'Authorization': 'Bearer ' + access_token
+                      }
+                  }).done(function(data) {
+
+                  });
+
+              }
+            });
+
+            /*$.ajax({
+              type: 'GET',
+              url: 'https://api.spotify.com/v1/recommendations',
+              market: 'US',
+              seed_artists: top_artists.items[0].id + '%'
+                          + top_artists.items[1].id + '%',
+              contentType: "application/json",
+              headers: {
                   'Authorization': 'Bearer ' + access_token
                 }
             }).done(function(data) {
 
-            });
+            });*/
           }, false);
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {

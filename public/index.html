@@ -146,9 +146,9 @@
           document.getElementById('get-recs').addEventListener('click', function() {
             $.ajax({
               url: '/recs',
-              //data: {
-              //  'refresh_token': refresh_token
-              //}
+              data: {
+                'user_id': userid
+              }
             }).done(function(data) {
               /*access_token = data.access_token;
               oauthPlaceholder.innerHTML = oauthTemplate({

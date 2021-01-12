@@ -159,6 +159,9 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
+  var userid = req.query.userid;
+
+  // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
@@ -172,6 +175,7 @@ app.get('/recs', function(req, res){
     }
   };
 
+  // Make request to api.spotify.com for recs
   console.log('api.spotify.com' + '/v1/recommendations?' + data);
   var recs = https.request(options, res => {
     console.log(`statusCode: ${res.statusCode}`)
@@ -182,6 +186,22 @@ app.get('/recs', function(req, res){
   });
 
   recs.end();
+
+  // Make playlist
+  options = {
+    hostname: 'api.spotify.com',
+    path: '/v1/users/' + userid + '/playlists',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + spotifyApi.access_token
+    }
+    data = querystring.stringify({
+      name: '4NHQUGzhtTLFvgF5SZesLK',
+      description: '0c6xIDDpzE81m2q797ordA'
+    });
+  }
+
+  // Pass playlist ID back to embed
 });
 
 console.log('Listening on 8080');

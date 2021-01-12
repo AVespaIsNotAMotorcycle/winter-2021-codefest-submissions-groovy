@@ -181,6 +181,7 @@ app.get('/recs', function(req, res){
     }
     else {
       console.log('Unsuccessful response to rec request' + response.statusCode);
+      console.log(body);
     }
   });
 

@@ -193,7 +193,7 @@ app.get('/recs', function(req, res){
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     },
-    contentType: "application/json",
+    //contentType: "application/json",
     data : JSON.stringify({
       name: "New Playlist",
       description: "New playlist description",

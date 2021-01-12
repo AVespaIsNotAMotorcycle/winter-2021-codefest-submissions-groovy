@@ -176,7 +176,6 @@ app.get('/recs', function(req, res){
   };
 
   // Make request to api.spotify.com for recs
-  console.log('api.spotify.com' + '/v1/recommendations?' + data);
   var recs = https.request(options, res => {
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
@@ -197,7 +196,8 @@ app.get('/recs', function(req, res){
     },
     data : {
       name: '4NHQUGzhtTLFvgF5SZesLK',
-      description: '0c6xIDDpzE81m2q797ordA'
+      description: '0c6xIDDpzE81m2q797ordA',
+      public: false
     }
   }
   var playlist = https.request(options, res => {

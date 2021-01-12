@@ -177,6 +177,7 @@ app.get('/recs', function(req, res){
   console.log('Starting rec request');
   console.log('token: ' + spotifyApi.access_token)
   request.get(options, function(error, response, body) {
+    console.log(options);
     if (!error && response.statusCode === 200) {
       console.log(body);
     }

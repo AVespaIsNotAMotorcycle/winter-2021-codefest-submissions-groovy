@@ -158,21 +158,22 @@ app.get('/recs', function(req, res){
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    url: 'https://api.spotify.com/v1/recommendations',
+    headers: { 'Authorization': spotifyApi.access_token },
     form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
+      seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+      seed_genres: 'australian indie',
+      seed_tracks: '0c6xIDDpzE81m2q797ordA'
     },
     json: true
   };
-  
-  request.post(authOptions, function(error, response, body) {
+
+  request.get(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
+      /*var access_token = body.access_token;
       res.send({
         'access_token': access_token
-      });
+      });*/
     }
   });
 

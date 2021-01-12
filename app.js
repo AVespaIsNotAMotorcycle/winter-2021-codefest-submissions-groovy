@@ -200,7 +200,15 @@ app.get('/recs', function(req, res){
       description: '0c6xIDDpzE81m2q797ordA'
     }
   }
-
+  var playlist = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`)
+  
+    res.on('data', d => {
+      process.stdout.write(d)
+    })
+  });
+  playlist.end();
+  
   // Pass playlist ID back to embed
 });
 

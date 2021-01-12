@@ -166,15 +166,16 @@ app.get('/recs', function(req, res){
 
   var recs = https.request({
     hostname: 'api.spotify.com',
-    path: '/v1/recommendations',
+    path: '/v1/recommendations'+data,
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     }
   }, function(res) {
     console.log(res.statusCode);
-  }
-  );
+  });
+
+  recs.end();
 });
 
 console.log('Listening on 8080');

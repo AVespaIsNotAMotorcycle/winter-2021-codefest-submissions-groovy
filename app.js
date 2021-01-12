@@ -161,7 +161,11 @@ app.get('/recs', function(req, res){
   var options = {
     url: 'https://api.spotify.com/v1/recommendations',
     method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
+    headers: { 
+      'Authorization': 'Bearer ' + spotifyApi.access_token,
+      'Accept': application/json,
+      'Content-Type': application/json
+    },
     data: {
       seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
       seed_genres: 'australian indie',

@@ -195,11 +195,11 @@ app.get('/recs', function(req, res){
       'Authorization': 'Bearer ' + spotifyApi.access_token,
       'Content-Type': 'application/json'
     },
-    data : {
+    data : JSON.stringify({
       "name": "New Playlist",
       "description": "New playlist description",
       "public": false
-    }
+    })
   }
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)

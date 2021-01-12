@@ -166,7 +166,7 @@ app.get('/recs', function(req, res){
   console.log('api.spotify.com' + '/v1/recommendations' + data);
   var recs = https.request({
     hostname: 'api.spotify.com',
-    path: '/v1/recommendations' + data,
+    path: '/v1/recommendations?' + data,
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token

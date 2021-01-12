@@ -7,7 +7,7 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-var XMLHttpRequest = require('xhr2');
+global.XMLHttpRequest = require('xhr2');
 var SpotifyWebApi = require('spotify-web-api-js');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -20,7 +20,7 @@ var client_secret = '35024b6079c549dd9409356c2945ab8e'; // Your secret
 var redirect_uri = 'http://groovy.samuelmebersole.com/callback'; // Your redirect uri
 
 var spotifyApi = new SpotifyWebApi();
-var xhr = new XMLHttpRequest();
+///var xhr = new XMLHttpRequest();
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string

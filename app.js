@@ -159,12 +159,22 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log(body.url);
-    console.log(body.explanation);
-  });
+  const options = {
+    url: "https://api.spotify.com/v1/recommendations?" +
+      "seed_artists=" + "4NHQUGzhtTLFvgF5SZesLK" + "&" +
+      "seed_tracks=" + "0c6xIDDpzE81m2q797ordA" + "&",
+    headers: {
+      "Authorization": "Bearer" + spotifyApi.access_token
+    }
+  };
 
+  function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log('Successful recommendations request');
+    }
+  }
+
+  request(options, callback);
 });
 
 console.log('Listening on 8080');

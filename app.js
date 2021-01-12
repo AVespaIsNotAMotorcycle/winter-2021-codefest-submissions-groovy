@@ -158,10 +158,11 @@ app.get('/recs', function(req, res){
 
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
-  var authOptions = {
+  var options = {
     url: 'https://api.spotify.com/v1/recommendations',
+    method: 'GET',
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
-    form: {
+    data: {
       seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
       seed_genres: 'australian indie',
       seed_tracks: '0c6xIDDpzE81m2q797ordA'
@@ -171,13 +172,9 @@ app.get('/recs', function(req, res){
 
   console.log('Starting rec request');
   console.log('token: ' + spotifyApi.access_token)
-  request.get(authOptions, function(error, response, body) {
+  request.get(options, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       console.log(body);
-      /*var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });*/
     }
     else {
       console.log('Unsuccessful response to rec request' + response.statusCode);
@@ -187,5 +184,5 @@ app.get('/recs', function(req, res){
 
 });
 
-console.log('Listening on 80');
+console.log('Listening on 8080');
 app.listen(8080);

@@ -159,28 +159,22 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  const options = {
-    url: "https://api.spotify.com/v1/recommendations?" +
-      "seed_artists=" + "4NHQUGzhtTLFvgF5SZesLK" + "&" +
-      "seed_tracks=" + "0c6xIDDpzE81m2q797ordA" + "&",
+  var data = querystring.stringify({
+    seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+    seed_tracks: '0c6xIDDpzE81m2q797ordA'
+  });
+
+  var recs = https.request({
+    hostname: 'api.spotify.com',
+    path: '/v1/recommendations',
+    method: 'GET',
     headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer" + spotifyApi.access_token
+      'Authorization': 'Bearer ' + spotifyApi.access_token
     }
-  };
-
-  function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log('Successful recommendations request');
-    }
-    else {
-      console.log('Unsuccessful recommendations request');
-      console.log(response);
-    }
+  }, function(res) {
+    console.log(res.statusCode);
   }
-
-  request(options, callback);
+  );
 });
 
 console.log('Listening on 8080');

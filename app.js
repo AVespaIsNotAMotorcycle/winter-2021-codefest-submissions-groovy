@@ -155,13 +155,18 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  /*var rec_ops = {
-    seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
-    seed_genres: 'australian indie',
-    seed_tracks: '0c6xIDDpzE81m2q797ordA'
-  }
-  spotifyApi.getRecommendations(rec_ops);
-  */
+  // requesting access token from refresh token
+  var refresh_token = req.query.refresh_token;
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    form: {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token
+    },
+    json: true
+  };
+  
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       var access_token = body.access_token;
@@ -170,7 +175,7 @@ app.get('/recs', function(req, res){
       });
     }
   });
-  
+
 });
 
 console.log('Listening on 80');

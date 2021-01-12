@@ -7,8 +7,8 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-
-var spotifyWebApi = require('spotify-web-api-js');
+global.XMLHttpRequest = require('xhr2');
+var SpotifyWebApi = require('spotify-web-api-node');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -19,6 +19,12 @@ var client_id = '62e70be4a3884d40b81f927e1dd0e7ee'; // Your client id
 var client_secret = '35024b6079c549dd9409356c2945ab8e'; // Your secret
 var redirect_uri = 'http://groovy.samuelmebersole.com/callback'; // Your redirect uri
 
+var spotifyApi = new SpotifyWebApi({
+  clientId: client_id,
+  clientSecret: client_secret,
+  redirectUri: redirect_uri
+});
+///var xhr = new XMLHttpRequest();
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -105,6 +111,8 @@ app.get('/callback', function(req, res) {
           console.log(body);
         });
 
+        spotifyApi.setAccessToken(access_token);
+
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
           querystring.stringify({
@@ -146,15 +154,34 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/recs', function(req, res){
-  spotifyWebApi.createPlaylist()
-      .then((response) => {
-        this.setState({
-          nowPlaying: {
-            name: response.item.name,
-            image: response.item.album.images[0].url
-          }
-        })
-      })
+
+  // requesting access token from refresh token
+  var refresh_token = req.query.refresh_token;
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/recommendations',
+    headers: { 'Authorization': spotifyApi.access_token },
+    form: {
+      seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+      seed_genres: 'australian indie',
+      seed_tracks: '0c6xIDDpzE81m2q797ordA'
+    },
+    json: true
+  };
+
+  console.log('Starting rec request');
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log('Successful response to rec request');
+      /*var access_token = body.access_token;
+      res.send({
+        'access_token': access_token
+      });*/
+    }
+    else {
+      console.log('Unsuccessful response to rec request' + response.statusCode);
+    }
+  });
+
 });
 
 console.log('Listening on 80');

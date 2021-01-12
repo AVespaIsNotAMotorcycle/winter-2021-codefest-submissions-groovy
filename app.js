@@ -159,7 +159,7 @@ app.get('/recs', function(req, res){
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://api.spotify.com/v1/recommendations',
-    headers: { 'Authorization': spotifyApi.access_token },
+    headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     form: {
       seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
       seed_genres: 'australian indie',

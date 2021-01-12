@@ -181,7 +181,7 @@ app.get('/recs', function(req, res){
     console.log(`statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
-      process.stdout.write(d)
+      //process.stdout.write(d)
     })
   });
 
@@ -208,7 +208,7 @@ app.get('/recs', function(req, res){
     })
   });
   playlist.end();
-  
+
   // Pass playlist ID back to embed
 });
 

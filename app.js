@@ -172,6 +172,7 @@ app.get('/recs', function(req, res){
       'Authorization': 'Bearer ' + spotifyApi.access_token
     }
   }, function(res) {
+    console.log(res.url);
     console.log(res.statusCode);
   });
 

@@ -177,6 +177,9 @@ app.get('/recs', function(req, res){
         'access_token': access_token
       });*/
     }
+    else {
+      console.log('Unsuccessful response to rec request');
+    }
   });
 
 });

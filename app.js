@@ -178,7 +178,7 @@ app.get('/recs', function(req, res){
   // Make request to api.spotify.com for recs
   console.log('api.spotify.com' + '/v1/recommendations?' + data);
   var recs = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`)
+    console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
       //process.stdout.write(d)
@@ -201,7 +201,7 @@ app.get('/recs', function(req, res){
     }
   }
   var playlist = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`)
+    console.log(`Playlist: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
       process.stdout.write(d)

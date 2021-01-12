@@ -172,6 +172,10 @@ app.get('/recs', function(req, res){
     if (!error && response.statusCode == 200) {
       console.log('Successful recommendations request');
     }
+    else {
+      console.log('Unsuccessful recommendations request');
+      console.log(response);
+    }
   }
 
   request(options, callback);

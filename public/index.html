@@ -142,7 +142,8 @@
               $('#login').show();
               $('#loggedin').hide();
           }
-
+          
+          /*
           document.getElementById('get-recs').addEventListener('click', function() {
             $.ajax({
               type: 'GET',
@@ -171,13 +172,15 @@
                     contentType: "application/json",
                     headers: {
                         'Authorization': 'Bearer ' + access_token
-                      }
+                    }
                   }).done(function(data) {
 
                   });
 
               }
             });
+            */
+
 
             /*$.ajax({
               type: 'GET',
@@ -191,8 +194,8 @@
                 }
             }).done(function(data) {
 
-            });*/
-          }, false);
+            });
+          }, false);*/
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {
             $.ajax({

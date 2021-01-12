@@ -8,7 +8,7 @@
  */
 
 
-//var spotifyWebApi = require('spotify-web-api-js');
+var SpotifyWebApi = require('spotify-web-api-js');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');

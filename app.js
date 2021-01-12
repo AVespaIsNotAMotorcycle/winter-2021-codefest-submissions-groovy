@@ -168,6 +168,7 @@ app.get('/recs', function(req, res){
     json: true
   };
 
+  console.log('Starting rec request');
   request.get(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       console.log('Successful response to rec request');

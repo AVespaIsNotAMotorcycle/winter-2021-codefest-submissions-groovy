@@ -194,11 +194,11 @@ app.get('/recs', function(req, res){
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
-    }
-    data = querystring.stringify({
+    },
+    data : {
       name: '4NHQUGzhtTLFvgF5SZesLK',
       description: '0c6xIDDpzE81m2q797ordA'
-    });
+    }
   }
 
   // Pass playlist ID back to embed

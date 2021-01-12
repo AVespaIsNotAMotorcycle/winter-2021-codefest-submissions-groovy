@@ -192,12 +192,13 @@ app.get('/recs', function(req, res){
     path: '/v1/users/' + userid + '/playlists',
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
+      'Authorization': 'Bearer ' + spotifyApi.access_token,
+      'Content-Type': 'application/json'
     },
     data : {
-      name: '4NHQUGzhtTLFvgF5SZesLK',
-      description: '0c6xIDDpzE81m2q797ordA',
-      public: false
+      "name": "New Playlist",
+      "description": "New playlist description",
+      "public": false
     }
   }
   var playlist = https.request(options, res => {

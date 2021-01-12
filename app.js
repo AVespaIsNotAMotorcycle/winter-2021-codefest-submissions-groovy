@@ -174,7 +174,7 @@ app.get('/recs', function(req, res){
 
   console.log('api.spotify.com' + '/v1/recommendations?' + data);
   var recs = https.request(options, function(res) {
-    console.log(res);
+    console.log(res.body);
     console.log(res.statusCode);
   });
 

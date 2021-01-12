@@ -10,9 +10,28 @@
 }
 
 body {
-  background: #c6a5a5;
+  background: #191414;
+
 }
 
 h1,h2 {
-  color: #136060;
+  color: #1DB954;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #141919;
+  border-color: #1DB954;
+}
+
+.btn-primary:hover {
+  color: #191414;
+  background-color: #1DB954;
+  border-color: #1DB954;
+}
+
+.container,#login-button{
+  text-align: center;
 }

@@ -8,6 +8,7 @@
  */
 
 global.XMLHttpRequest = require('xhr2');
+var https = require('https')
 var SpotifyWebApi = require('spotify-web-api-node');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -156,35 +157,10 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var options = {
-    url: 'https://api.spotify.com/v1/recommendations',
-    method: 'GET',
-    headers: { 
-      'Authorization': 'Bearer ' + spotifyApi.access_token,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    data: {
-      seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
-      seed_genres: 'australian indie',
-      seed_tracks: '0c6xIDDpzE81m2q797ordA'
-    },
-    json: true
-  };
-
-  console.log('Starting rec request');
-  console.log('token: ' + spotifyApi.access_token)
-  request.get(options, function(error, response, body) {
-    console.log(options);
-    if (!error && response.statusCode === 200) {
-      console.log(body);
-    }
-    else {
-      console.log('Unsuccessful response to rec request' + response.statusCode);
-      console.log(body);
-    }
+  request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log(body.url);
+    console.log(body.explanation);
   });
 
 });

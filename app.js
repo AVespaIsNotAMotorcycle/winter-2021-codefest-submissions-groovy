@@ -163,8 +163,8 @@ app.get('/recs', function(req, res){
     method: 'GET',
     headers: { 
       'Authorization': 'Bearer ' + spotifyApi.access_token,
-      'Accept': application/json,
-      'Content-Type': application/json
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     },
     data: {
       seed_artists: '4NHQUGzhtTLFvgF5SZesLK',

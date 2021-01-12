@@ -163,10 +163,10 @@ app.get('/recs', function(req, res){
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
   });
-
+  console.log('api.spotify.com' + '/v1/recommendations' + data);
   var recs = https.request({
     hostname: 'api.spotify.com',
-    path: '/v1/recommendations'+data,
+    path: '/v1/recommendations' + data,
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token

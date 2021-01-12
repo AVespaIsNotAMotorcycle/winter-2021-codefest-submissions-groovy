@@ -7,7 +7,7 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var XMLHttpRequest = require('xhr2');
 var SpotifyWebApi = require('spotify-web-api-js');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library

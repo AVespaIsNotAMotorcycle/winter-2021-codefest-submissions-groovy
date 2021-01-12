@@ -146,15 +146,13 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get('/recs', function(req, res){
-  spotifyWebApi.createPlaylist()
-      .then((response) => {
-        this.setState({
-          nowPlaying: {
-            name: response.item.name,
-            image: response.item.album.images[0].url
-          }
-        })
-      })
+
+  var rec_ops = {
+    seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
+    seed_genres: 'australian indie',
+    seed_tracks: '0c6xIDDpzE81m2q797ordA'
+  }
+  spotifyWebApi.getRecommendations(rec_ops);
 });
 
 console.log('Listening on 80');

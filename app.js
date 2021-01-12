@@ -155,12 +155,22 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  var rec_ops = {
+  /*var rec_ops = {
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
     seed_genres: 'australian indie',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
   }
   spotifyApi.getRecommendations(rec_ops);
+  */
+  request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      var access_token = body.access_token;
+      res.send({
+        'access_token': access_token
+      });
+    }
+  });
+  
 });
 
 console.log('Listening on 80');

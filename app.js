@@ -8,7 +8,7 @@
  */
 
 
-var spotifyWebApi = require('spotify-web-api-js');
+//var spotifyWebApi = require('spotify-web-api-js');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -18,6 +18,8 @@ var cookieParser = require('cookie-parser');
 var client_id = '62e70be4a3884d40b81f927e1dd0e7ee'; // Your client id
 var client_secret = '35024b6079c549dd9409356c2945ab8e'; // Your secret
 var redirect_uri = 'http://groovy.samuelmebersole.com/callback'; // Your redirect uri
+
+var spotifyApi = new SpotifyWebApi();
 
 /**
  * Generates a random string containing numbers and letters
@@ -105,6 +107,8 @@ app.get('/callback', function(req, res) {
           console.log(body);
         });
 
+        spotifyApi.setAccessToken(access_token);
+
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
           querystring.stringify({
@@ -152,7 +156,7 @@ app.get('/recs', function(req, res){
     seed_genres: 'australian indie',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
   }
-  spotifyWebApi.getRecommendations(rec_ops);
+  spotifyApi.getRecommendations(rec_ops);
 });
 
 console.log('Listening on 80');

@@ -195,7 +195,7 @@ app.get('/recs', function(req, res){
     request.post(options, function(error, response, body) {
 
       var playlist = body;
-      console.log(recommendations);
+      console.log(playlist);
 
       // Iterate through songs in recommendations object, post to playlist
       for(var i = 0; i < recommendations.tracks.length; i++) {
@@ -212,7 +212,7 @@ app.get('/recs', function(req, res){
           })
         }
         request.post(s_options, function(error, response, body) {
-          console.log(s_options);
+          //console.log(s_options);
         });
       }
 

@@ -201,7 +201,7 @@ app.get('/recs', function(req, res){
     body: JSON.stringify({name: "test", public: false})
   };
   console.log("Playlist options defined:\n"
-    + "URL: " + url /*options.hostname + options.path*/ + "\n"
+    + "URL: " + options.url /*options.hostname + options.path*/ + "\n"
     + "Body: " + options.body);
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)

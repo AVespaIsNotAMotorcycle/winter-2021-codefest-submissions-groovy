@@ -131,7 +131,7 @@
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
-                  userid = response.id;
+                  userid = response.data.id;
 
                   $('#login').hide();
                   $('#loggedin').show();

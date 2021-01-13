@@ -202,12 +202,10 @@ app.get('/recs', function(req, res){
   };
 
   var playlist = https.request(options, res => {
-    console.log(`Playlist: statusCode: ${res.statusCode}`)
+    console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
-    console.log(options);
-
     res.on('data', d => {
-      process.stdout.write(d)
+      //process.stdout.write(d)
     })
   });
   playlist.end();

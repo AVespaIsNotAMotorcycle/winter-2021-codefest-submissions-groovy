@@ -187,7 +187,7 @@ app.get('/recs', function(req, res){
 
   recs.end();
   
-  console.log("Defining playlist options...");
+  //console.log("Defining playlist options...");
   // Make playlist
   options = {
     url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
@@ -202,9 +202,9 @@ app.get('/recs', function(req, res){
     }
   };
 
-  console.log("Playlist options defined:\n"
-    + options /*"URL: " + options.url /*options.hostname + options.path + "\n"
-    + "Body: " + options.body*/);
+  /*console.log("Playlist options defined:\n"
+    + "URL: " + options.url + "\n"
+    + "Body: " + options.body);*/
 
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)

@@ -188,8 +188,8 @@ app.get('/recs', function(req, res){
     })
   });
 
-  //recs.end();
-  //var songrecs = JSON.parse(str);
+  recs.end();
+  var songrecs = JSON.parse(str);
   
   // Make playlist
   options = {
@@ -209,10 +209,7 @@ app.get('/recs', function(req, res){
 
   request.post(options, function(error, response, body) {
     console.log('Playlist: ' + response.statusCode);
-    playlist_id = body.id;
-    console.log(body);
-    console.log('Playlist link: ' + JSON.parse(body).id);
-    console.log('Playlist ID: ' + playlist_id);
+    playlist_id = JSON.parse(body).id;
   });
   
   // Add songs to playlist

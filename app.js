@@ -189,10 +189,9 @@ app.get('/recs', function(req, res){
   
   console.log("Defining playlist options...");
   // Make playlist
-  options = {/*
+  options = {
     hostname: 'api.spotify.com',
-    path: '/v1/users/' + userid + '/playlists',*/
-    url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
+    path: '/v1/users/' + userid + '/playlists',
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token,

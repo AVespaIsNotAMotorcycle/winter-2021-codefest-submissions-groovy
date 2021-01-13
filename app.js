@@ -179,7 +179,11 @@ app.get('/recs', function(req, res){
 
   var str = '';
   // Make request to api.spotify.com for recs
+  console.log('Sending rec request');
   var recs = request.get(options, function(error, response, body) {
+    if (error) {
+      console.log('Error requesting recommendations');
+    }
     console.log('Recs: ' + response.statusCode);
   })
 

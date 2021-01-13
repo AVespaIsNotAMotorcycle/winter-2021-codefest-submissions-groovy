@@ -195,7 +195,7 @@ app.get('/recs', function(req, res){
     request.post(options, function(error, response, body) {
 
       var playlist = body;
-      console.log(playlist);
+      console.log(playlist.id);
 
       // Iterate through songs in recommendations object, post to playlist
       for(var i = 0; i < recommendations.tracks.length; i++) {

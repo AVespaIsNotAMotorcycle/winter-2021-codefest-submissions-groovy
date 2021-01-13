@@ -209,7 +209,7 @@ app.get('/recs', function(req, res){
 
   request.post(options, function(error, response, body) {
     console.log('Playlist: ' + response.statusCode);
-    playlist_id = body.id
+    playlist_id = response.body.id;
     console.log('Playlist ID: ' + playlist_id);
   });
   

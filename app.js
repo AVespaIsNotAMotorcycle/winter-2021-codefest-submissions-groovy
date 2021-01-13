@@ -160,7 +160,7 @@ app.get('/refresh_token', function(req, res) {
 app.get('/recs', function(req, res){
 
   var userid = req.query.userid;
-  console.log(:"USERID:" + userid);
+  console.log("USERID:" + userid);
 
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({

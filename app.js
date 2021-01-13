@@ -202,6 +202,7 @@ app.get('/recs', function(req, res){
   };
 
   request.post(options, function(error, response, body) {
+    console.log('Playlist:' + response.statusCode);
     if (!error && response.statusCode === 200) {
       console.log('success');
     }

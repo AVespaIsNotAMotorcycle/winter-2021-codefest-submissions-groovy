@@ -174,7 +174,9 @@ app.get('/recs', function(req, res){
 
   // Send recommendations request
   request.get(options, function(error, response, body) {
-    console.log(body);
+    //console.log(body);
+
+    var recommendations = body;
 
     // Options for playlist creations request
     options = {
@@ -191,7 +193,15 @@ app.get('/recs', function(req, res){
     };
     // Send playlist creation request
     request.post(options, function(error, response, body) {
-      console.log(body);
+      //console.log(body);
+
+      // Iterate through songs in recommendations object, post to playlist
+      for(var i = 0; i < recommendations.length; i++) {
+        var obj = recommendations[i];
+    
+        console.log(obj.id);
+      }
+
     });
 
     

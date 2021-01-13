@@ -161,6 +161,22 @@ app.get('/recs', function(req, res){
 
   var userid = req.query.user_id;
 
+  // Get top artists
+  var top_artists_options = {
+    url: 'https://api.spotify.com/v1/me/top/artists',
+    headers: {
+      'Authorization': 'Bearer ' + spotifyApi.access_token
+    },
+    body: {
+      limit: 50
+    }
+  }
+  request.get(top_artists_options, function(error, response, body) {
+    console.log(response);
+  });
+
+  // Get top tracks
+
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',

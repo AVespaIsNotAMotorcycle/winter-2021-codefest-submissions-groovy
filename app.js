@@ -193,15 +193,13 @@ app.get('/recs', function(req, res){
     };
     // Send playlist creation request
     request.post(options, function(error, response, body) {
-      console.log(recommendations);
 
       var playlist = body;
+      console.log(playlist);
 
       // Iterate through songs in recommendations object, post to playlist
       for(var i = 0; i < recommendations.tracks.length; i++) {
         var obj = recommendations.tracks[i];
-    
-        console.log(obj.uri);
 
         s_options = {
           url: 'https://api.spotify.com/v1/playlists/' + playlist.id + '/tracks',

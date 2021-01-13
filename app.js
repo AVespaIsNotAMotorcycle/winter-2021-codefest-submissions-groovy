@@ -208,7 +208,7 @@ app.get('/recs', function(req, res){
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            'uris': '[' + obj.uri + ']'
+            'uris': obj.uri
           })
         }
         request.post(s_options, function(error, response, body) {

@@ -178,16 +178,25 @@ app.get('/recs', function(req, res){
     }
   };
 
+  var str = '';
   // Make request to api.spotify.com for recs
   var recs = https.request(options, res => {
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
-      process.stdout.write(d)
+      process.stdout.write(d);
+      str += d;
     })
   });
 
   recs.end();
+  var recres = JSON.parse(str);
+
+  for(var i = 0; i < recres.length; i++) {
+    var obj = recres[i];
+
+    console.log(obj.id);
+}
   
   // Make playlist
   options = {

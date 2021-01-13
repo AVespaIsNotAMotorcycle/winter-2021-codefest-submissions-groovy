@@ -175,7 +175,6 @@ app.get('/recs', function(req, res){
     }
   };
 
-  console.log("Defining playlist options...")
   // Make request to api.spotify.com for recs
   var recs = https.request(options, res => {
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
@@ -187,7 +186,7 @@ app.get('/recs', function(req, res){
 
   recs.end();
   
-  console.log("Playlist options defined")
+  console.log("Defining playlist options...");
   // Make playlist
   options = {
     hostname: 'api.spotify.com',
@@ -203,6 +202,9 @@ app.get('/recs', function(req, res){
       "public": false
     })
   };
+  console.log("Playlist options defined:\n"
+    + "URL: " + options.hostname + options.path + "\n"
+    + "Body: " + options.body);
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)
   

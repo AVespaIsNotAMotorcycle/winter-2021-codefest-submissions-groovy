@@ -201,7 +201,7 @@ app.get('/recs', function(req, res){
     console.log(`Playlist: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
-      //process.stdout.write(d)
+      process.stdout.write(d)
     })
   });
   playlist.end();

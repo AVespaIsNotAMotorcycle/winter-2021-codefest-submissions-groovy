@@ -202,7 +202,7 @@ app.get('/recs', function(req, res){
         var obj = recommendations.tracks[i];
 
         var trackdata = JSON.stringify({
-          uris: obj
+          uris: obj.uri
         })
 
         s_options = {

@@ -201,14 +201,11 @@ app.get('/recs', function(req, res){
     }
   };
 
-  var playlist = https.request(options, res => {
-    console.log(`Recommendations: statusCode: ${res.statusCode}`)
-  
-    res.on('data', d => {
-      //process.stdout.write(d)
-    })
+  request.post(options, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      console.log('success');
+    }
   });
-  playlist.end();
   
   // Pass playlist ID back to embed
 });

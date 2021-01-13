@@ -214,12 +214,13 @@ app.get('/recs', function(req, res){
   });
   
   // Add songs to playlist
+  /*
   for(var i = 0; i < songrecs.length; i++) {
     var obj = songrecs[i];
 
     console.log(obj.id);
   } 
-
+  */
   // Pass playlist ID back to embed
 
 

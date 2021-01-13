@@ -162,8 +162,6 @@ app.get('/recs', function(req, res){
   var userid = req.query.user_id;
   console.log("USERID:" + userid);
 
-  var song_recs = '';
-
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
@@ -190,13 +188,7 @@ app.get('/recs', function(req, res){
   });
 
   recs.end();
-  var recres = JSON.parse(str);
-
-  for(var i = 0; i < recres.length; i++) {
-    var obj = recres[i];
-
-    console.log(obj.id);
-}
+  var songrecs = JSON.parse(str);
   
   // Make playlist
   options = {
@@ -212,12 +204,20 @@ app.get('/recs', function(req, res){
     }
   };
 
+  var playlist_id = "";
+
   request.post(options, function(error, response, body) {
     console.log('Playlist: ' + response.statusCode);
+    playlist_id = body.id
+    console.log('Playlist ID: ' + playlist_id);
   });
   
   // Add songs to playlist
-  
+  for(var i = 0; i < songrecs.length; i++) {
+    var obj = songrecs[i];
+
+    console.log(obj.id);
+  } 
 
   // Pass playlist ID back to embed
 

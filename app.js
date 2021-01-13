@@ -201,9 +201,11 @@ app.get('/recs', function(req, res){
         'Content-Type': 'application/json',
     }
   };
+
   console.log("Playlist options defined:\n"
-    + "URL: " + options.url /*options.hostname + options.path*/ + "\n"
-    + "Body: " + options.body);
+    + options /*"URL: " + options.url /*options.hostname + options.path + "\n"
+    + "Body: " + options.body*/);
+
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)
   

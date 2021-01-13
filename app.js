@@ -187,7 +187,7 @@ app.get('/recs', function(req, res){
     })
   });
 
-  recs.end();
+  //recs.end();
   var songrecs = JSON.parse(str);
   
   // Make playlist

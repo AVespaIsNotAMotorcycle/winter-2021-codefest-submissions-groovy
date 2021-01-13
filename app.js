@@ -182,7 +182,7 @@ app.get('/recs', function(req, res){
     options = {
       url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
       body: JSON.stringify({
-          'name': 'name',
+          'name': Date.now(),
           'public': false
       }),
       dataType:'json',

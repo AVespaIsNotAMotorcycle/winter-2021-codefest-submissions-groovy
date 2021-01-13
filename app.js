@@ -162,6 +162,8 @@ app.get('/recs', function(req, res){
   var userid = req.query.user_id;
   console.log("USERID:" + userid);
 
+  var song_recs = '';
+
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
@@ -181,7 +183,7 @@ app.get('/recs', function(req, res){
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
-      //process.stdout.write(d)
+      process.stdout.write(d)
     })
   });
 
@@ -202,13 +204,15 @@ app.get('/recs', function(req, res){
   };
 
   request.post(options, function(error, response, body) {
-    console.log('Playlist:' + response.statusCode);
-    if (!error && response.statusCode === 200) {
-      console.log('success');
-    }
+    console.log('Playlist: ' + response.statusCode);
   });
   
+  // Add songs to playlist
+  
+
   // Pass playlist ID back to embed
+
+
 });
 
 process.on('uncaughtException', function (err) {

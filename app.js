@@ -212,7 +212,7 @@ app.get('/recs', function(req, res){
           })
         }
         request.post(s_options, function(error, response, body) {
-          console.log(obj.uri + " : " + response.statusCode);
+          console.log(s_options);
         });
       }
 

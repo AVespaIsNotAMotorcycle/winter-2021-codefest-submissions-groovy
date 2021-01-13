@@ -201,13 +201,9 @@ app.get('/recs', function(req, res){
       for(var i = 0; i < recommendations.tracks.length; i++) {
         var obj = recommendations.tracks[i];
 
-        var trackdata = JSON.stringify(
-          uris: obj.uri
-        )
-
         s_options = {
           url: 'https://api.spotify.com/v1/playlists/' + playlist.id + '/tracks?'
-            + trackdata,
+            + 'uris=' + obj.uri,
           headers: {
             'Authorization': 'Bearer ' + spotifyApi.access_token,
             'Content-Type': 'application/json',

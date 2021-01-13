@@ -175,6 +175,7 @@ app.get('/recs', function(req, res){
     }
   };
 
+  console.log("Defining playlist options...")
   // Make request to api.spotify.com for recs
   var recs = https.request(options, res => {
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
@@ -186,6 +187,7 @@ app.get('/recs', function(req, res){
 
   recs.end();
   
+  console.log("Playlist options defined")
   // Make playlist
   options = {
     url: 'api.spotify.com/v1/users/' + userid + '/playlists',

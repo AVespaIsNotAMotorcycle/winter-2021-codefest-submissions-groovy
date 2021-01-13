@@ -189,19 +189,16 @@ app.get('/recs', function(req, res){
   
   console.log("Defining playlist options...");
   // Make playlist
-  options = {
+  options = {/*
     hostname: 'api.spotify.com',
-    path: '/v1/users/' + userid + '/playlists',
+    path: '/v1/users/' + userid + '/playlists',*/
+    url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token,
       'Content-Type': 'application/json'
     },
-    data: JSON.stringify({
-      "name": "New Playlist",
-      "description": "New playlist description",
-      "public": false
-    })
+    data: JSON.stringify({name: "test", public: false})
   };
   console.log("Playlist options defined:\n"
     + "URL: " + options.hostname + options.path + "\n"

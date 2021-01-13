@@ -184,7 +184,7 @@ app.get('/recs', function(req, res){
     console.log(`Recommendations: statusCode: ${res.statusCode}`)
   
     res.on('data', d => {
-      process.stdout.write(d);
+      //process.stdout.write(d);
       str += d;
     })
   });

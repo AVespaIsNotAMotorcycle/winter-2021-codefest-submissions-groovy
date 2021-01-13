@@ -196,6 +196,11 @@ app.get('/recs', function(req, res){
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     },
+    body: {
+      "name": "New Playlist",
+      "description": "New playlist description",
+      "public": false
+    }
   }
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)

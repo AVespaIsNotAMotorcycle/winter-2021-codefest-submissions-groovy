@@ -178,26 +178,15 @@ app.get('/recs', function(req, res){
     }
   };*/
   var options = {
-    url: 'api.spotify.com/v1/recommendations?' + data,
-    dataType:'json',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token,
-      'Content-Type': 'application/json',
-    }
-  }
+    url: 'https://api.spotify.com/v1/me',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
 
-  var str = '';
-  // Make request to api.spotify.com for recs
-  console.log('Sending rec request');
-  var recs = request.get(options, function(error, response, body) {
-    if (error) {
-      console.log('Error requesting recommendations');
-      console.log(response);
-    }
-    else {
-      console.log('Recs: ' + response.statusCode);
-    }
-  })
+  // use the access token to access the Spotify Web API
+  request.get(options, function(error, response, body) {
+    console.log(body);
+  });
 
   // Make playlist
   options = {

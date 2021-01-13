@@ -185,7 +185,7 @@ app.get('/recs', function(req, res){
   });
 
   recs.end();
-  /*
+  
   // Make playlist
   options = {
     url: 'api.spotify.com/v1/users/' + userid + '/playlists',
@@ -193,11 +193,6 @@ app.get('/recs', function(req, res){
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     },
-    data : JSON.stringify({
-      name: "New Playlist",
-      description: "New playlist description",
-      public: false
-    })
   }
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)
@@ -207,7 +202,7 @@ app.get('/recs', function(req, res){
     })
   });
   playlist.end();
-  */
+  
   // Pass playlist ID back to embed
 });
 

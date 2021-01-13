@@ -189,7 +189,7 @@ app.get('/recs', function(req, res){
     })
 
     // When stream ends, carry out rest of process
-    res.on('close', function(){
+    res.on('end', function(){
       console.log("Close received!");
       var songrecs = JSON.parse(str);
       
@@ -223,7 +223,7 @@ app.get('/recs', function(req, res){
 
       // Pass playlist ID back to embed
 
-  });
+    });
   });
 
 

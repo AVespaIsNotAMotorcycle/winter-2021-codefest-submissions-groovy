@@ -192,9 +192,9 @@ app.get('/recs', function(req, res){
       }
     };
     // Send playlist creation request
-    request.post(options, function(error, response, body) {
+    request.post(options, function(error, response, p_body) {
 
-      var playlist = body.id;
+      var playlist = p_body.id;
       console.log(playlist);
 
       // Iterate through songs in recommendations object, post to playlist

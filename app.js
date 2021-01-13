@@ -167,6 +167,7 @@ app.get('/recs', function(req, res){
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
   });
+  /*
   var options = {
     hostname: 'api.spotify.com',
     path: '/v1/recommendations?' + data,
@@ -175,7 +176,14 @@ app.get('/recs', function(req, res){
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     }
-  };
+  };*/
+  var options = {
+    url: 'api.spotify.com/v1/recommendations?' + data,
+    dataType:'json',
+    headers: {
+      'Authorization': 'Bearer ' + spotifyApi.access_token
+    }
+  }
 
   var str = '';
   // Make request to api.spotify.com for recs

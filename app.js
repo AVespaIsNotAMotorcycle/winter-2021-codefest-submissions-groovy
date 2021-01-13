@@ -195,11 +195,27 @@ app.get('/recs', function(req, res){
     request.post(options, function(error, response, body) {
       console.log(recommendations);
 
+      var playlist = body;
+
       // Iterate through songs in recommendations object, post to playlist
       for(var i = 0; i < recommendations.tracks.length; i++) {
         var obj = recommendations.tracks[i];
     
-        console.log(obj.id);
+        console.log(obj.uri);
+
+        s_options = {
+          url: 'https://api.spotify.com/v1/playlists/' + playlist.id + '/tracks',
+          headers: {
+            'Authorization': 'Bearer ' + spotifyApi.access_token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'uris': obj.uri
+          })
+        }
+        request.post(s_options, function(error, response, body) {
+
+        });
       }
 
     });

@@ -211,7 +211,7 @@ app.get('/recs', function(req, res){
     console.log('Playlist: ' + response.statusCode);
     playlist_id = body.id;
     console.log(body);
-    console.log('Playlist link: ' + body[0]);
+    console.log('Playlist link: ' + JSON.parse(body).id);
     console.log('Playlist ID: ' + playlist_id);
   });
   

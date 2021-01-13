@@ -189,7 +189,7 @@ app.get('/recs', function(req, res){
   
   console.log("Playlist options defined")
   // Make playlist
-  options = {
+  options = JSON.stringify({
     hostname: 'api.spotify.com',
     path: '/v1/users/' + userid + '/playlists',
     method: 'POST',
@@ -202,7 +202,7 @@ app.get('/recs', function(req, res){
       "description": "New playlist description",
       "public": false
     }
-  }
+  });
   var playlist = https.request(options, res => {
     console.log(`Playlist: statusCode: ${res.statusCode}`)
   

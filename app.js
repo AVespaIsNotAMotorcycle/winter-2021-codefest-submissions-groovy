@@ -181,7 +181,8 @@ app.get('/recs', function(req, res){
     url: 'api.spotify.com/v1/recommendations?' + data,
     dataType:'json',
     headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
+      'Authorization': 'Bearer ' + spotifyApi.access_token,
+      'Content-Type': 'application/json',
     }
   }
 
@@ -191,8 +192,11 @@ app.get('/recs', function(req, res){
   var recs = request.get(options, function(error, response, body) {
     if (error) {
       console.log('Error requesting recommendations');
+      console.log(response);
     }
-    console.log('Recs: ' + response.statusCode);
+    else {
+      console.log('Recs: ' + response.statusCode);
+    }
   })
 
   // Make playlist

@@ -160,7 +160,6 @@ app.get('/refresh_token', function(req, res) {
 app.get('/recs', function(req, res){
 
   var userid = req.query.user_id;
-  console.log("USERID:" + userid);
 
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
@@ -178,7 +177,7 @@ app.get('/recs', function(req, res){
     }
   };*/
   var options = {
-    url: 'https://api.spotify.com/v1/me',
+    url: 'https://api.spotify.com/v1/recommendations?' + data,
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
@@ -209,13 +208,13 @@ app.get('/recs', function(req, res){
     playlist_id = JSON.parse(body).id;
   });
   
-
+  /*
   for(var i = 0; i < songrecs.length; i++) {
     var obj = songrecs[i];
 
     console.log(obj.id);
   } 
-
+  */
   // Pass playlist ID back to embed
 
 });

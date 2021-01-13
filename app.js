@@ -166,56 +166,36 @@ app.get('/recs', function(req, res){
     seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
     seed_tracks: '0c6xIDDpzE81m2q797ordA'
   });
-  /*
-  var options = {
-    hostname: 'api.spotify.com',
-    path: '/v1/recommendations?' + data,
-    method: 'GET',
-    dataType:'json',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
-    }
-  };*/
   var options = {
     url: 'https://api.spotify.com/v1/recommendations?' + data,
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
 
-  // use the access token to access the Spotify Web API
+  // Send recommendations request
   request.get(options, function(error, response, body) {
     console.log(body);
+
+    // Options for playlist creations request
+    options = {
+      url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
+      body: JSON.stringify({
+          'name': 'name',
+          'public': false
+      }),
+      dataType:'json',
+      headers: {
+          'Authorization': 'Bearer ' + spotifyApi.access_token,
+          'Content-Type': 'application/json',
+      }
+    };
+    // Send playlist creation request
+    request.post(options, function(error, response, body) {
+      console.log(body);
+    });
+
+    
   });
-
-  // Make playlist
-  options = {
-    url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
-    body: JSON.stringify({
-        'name': 'name',
-        'public': false
-    }),
-    dataType:'json',
-    headers: {
-        'Authorization': 'Bearer ' + spotifyApi.access_token,
-        'Content-Type': 'application/json',
-    }
-  };
-
-  var playlist_id = "";
-
-  request.post(options, function(error, response, body) {
-    console.log('Playlist: ' + response.statusCode);
-    playlist_id = JSON.parse(body).id;
-  });
-  
-  /*
-  for(var i = 0; i < songrecs.length; i++) {
-    var obj = songrecs[i];
-
-    console.log(obj.id);
-  } 
-  */
-  // Pass playlist ID back to embed
 
 });
 

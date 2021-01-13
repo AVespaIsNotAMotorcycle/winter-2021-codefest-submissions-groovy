@@ -197,7 +197,7 @@ app.get('/recs', function(req, res){
     }),
     dataType:'json',
     headers: {
-        'Authorization': 'Bearer ' + access_token,
+        'Authorization': 'Bearer ' + spotifyApi.access_token,
         'Content-Type': 'application/json',
     }
   };

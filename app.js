@@ -179,54 +179,39 @@ app.get('/recs', function(req, res){
 
   var str = '';
   // Make request to api.spotify.com for recs
-  var recs = https.request(options, res => {
-    console.log(`Recommendations: statusCode: ${res.statusCode}`)
-  
-    // As data is coming in, append
-    res.on('data', d => {
-      //process.stdout.write(d);
-      str += d;
-    })
+  var recs = request.get(options, function(error, response, body) {
+    console.log('Recs: ' + response.statusCode);
+  })
 
-    // When stream ends, carry out rest of process
-    res.on('end', function(){
-      console.log("Close received!");
-      var songrecs = JSON.parse(str);
-      
-      // Make playlist
-      options = {
-        url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
-        body: JSON.stringify({
-            'name': 'name',
-            'public': false
-        }),
-        dataType:'json',
-        headers: {
-            'Authorization': 'Bearer ' + spotifyApi.access_token,
-            'Content-Type': 'application/json',
-        }
-      };
-    
-      var playlist_id = "";
-    
-      request.post(options, function(error, response, body) {
-        console.log('Playlist: ' + response.statusCode);
-        playlist_id = JSON.parse(body).id;
-      });
-      
+  // Make playlist
+  options = {
+    url: 'https://api.spotify.com/v1/users/' + userid + '/playlists',
+    body: JSON.stringify({
+        'name': 'name',
+        'public': false
+    }),
+    dataType:'json',
+    headers: {
+        'Authorization': 'Bearer ' + spotifyApi.access_token,
+        'Content-Type': 'application/json',
+    }
+  };
 
-      for(var i = 0; i < songrecs.length; i++) {
-        var obj = songrecs[i];
-    
-        console.log(obj.id);
-      } 
+  var playlist_id = "";
 
-      // Pass playlist ID back to embed
-
-    });
+  request.post(options, function(error, response, body) {
+    console.log('Playlist: ' + response.statusCode);
+    playlist_id = JSON.parse(body).id;
   });
+  
 
+  for(var i = 0; i < songrecs.length; i++) {
+    var obj = songrecs[i];
 
+    console.log(obj.id);
+  } 
+
+  // Pass playlist ID back to embed
 
 });
 

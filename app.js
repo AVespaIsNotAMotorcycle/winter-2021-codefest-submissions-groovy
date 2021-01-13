@@ -215,5 +215,9 @@ app.get('/recs', function(req, res){
   // Pass playlist ID back to embed
 });
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+}); 
+
 console.log('Listening on 8080');
 app.listen(8080);

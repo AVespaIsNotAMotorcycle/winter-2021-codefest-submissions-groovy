@@ -171,6 +171,7 @@ app.get('/recs', function(req, res){
     hostname: 'api.spotify.com',
     path: '/v1/recommendations?' + data,
     method: 'GET',
+    dataType:'json',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     }

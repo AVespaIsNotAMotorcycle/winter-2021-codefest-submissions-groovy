@@ -201,6 +201,7 @@ app.get('/recs', function(req, res){
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
+  console.log(options);
 
   // Send recommendations request
   request.get(options, function(error, response, body) {

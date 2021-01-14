@@ -162,6 +162,7 @@ app.get('/recs', function(req, res){
   var userid = req.query.user_id;
 
   // Get top artists
+  var t_artists = "";
   var top_artists_options = {
     url: 'https://api.spotify.com/v1/me/top/artists',
     headers: {
@@ -169,7 +170,9 @@ app.get('/recs', function(req, res){
     }
   }
   request.get(top_artists_options, function(error, response, body) {
-    console.log(response);
+    //console.log(response);
+    t_artists = JSON.parse(body);
+    console.log(t_artists);
   });
 
   // Get top tracks

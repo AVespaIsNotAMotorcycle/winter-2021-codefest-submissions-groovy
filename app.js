@@ -170,7 +170,6 @@ app.get('/recs', function(req, res){
     }
   }
   request.get(top_artists_options, function(error, response, body) {
-    //console.log(response);
     t_artists = JSON.parse(body);
     console.log(t_artists);
   });
@@ -184,15 +183,18 @@ app.get('/recs', function(req, res){
     }
   }
   request.get(top_tracks_options, function(error, response, body) {
-    //console.log(response);
     t_tracks = JSON.parse(body);
     console.log(t_tracks);
   });
 
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
-    seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
-    seed_tracks: '0c6xIDDpzE81m2q797ordA'
+    //seed_artists: '',
+    seed_tracks: t_tracks.items[0].id + ","
+               + t_tracks.items[1].id + ","
+               + t_tracks.items[2].id + ","
+               + t_tracks.items[3].id + ","
+               + t_tracks.items[4].id
   });
   var options = {
     url: 'https://api.spotify.com/v1/recommendations?' + data,

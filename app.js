@@ -204,7 +204,7 @@ app.get('/recs', function(req, res){
 
   // Send recommendations request
   request.get(options, function(error, response, body) {
-    //console.log(body);
+    console.log(body);
 
     var recommendations = body;
 

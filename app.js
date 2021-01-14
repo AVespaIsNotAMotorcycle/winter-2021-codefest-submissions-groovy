@@ -186,7 +186,7 @@ app.get('/recs', function(req, res){
     t_tracks = JSON.parse(body);
     //console.log(t_tracks.items[2]);
   });
-
+  console.log(t_tracks.items[2]);
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     //seed_artists: '',

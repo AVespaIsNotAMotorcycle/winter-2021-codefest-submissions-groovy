@@ -184,7 +184,7 @@ app.get('/recs', function(req, res){
   }
   request.get(top_tracks_options, function(error, response, body) {
     t_tracks = JSON.parse(body);
-    console.log(t_tracks);
+    console.log(t_tracks.items);
   });
 
   // Data & Options for Spotify recommendations request

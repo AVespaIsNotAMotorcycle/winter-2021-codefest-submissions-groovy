@@ -175,18 +175,18 @@ app.get('/recs', function(req, res){
   });
 
   // Get top tracks
-  var t_tracks = "";
+  //var t_tracks = "";
   var top_tracks_options = {
     url: 'https://api.spotify.com/v1/me/top/tracks',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
     }
   }
-  request.get(top_tracks_options, function(error, response, body) {
+  var t_tracks = request.get(top_tracks_options, function(error, response, body) {
     t_tracks = JSON.parse(body);
     //console.log(t_tracks.items[2]);
   });
-  console.log(t_tracks.items[2]);
+  console.log(t_tracks);
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     //seed_artists: '',

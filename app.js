@@ -171,7 +171,7 @@ app.get('/recs', function(req, res){
   }
   request.get(top_artists_options, function(error, response, body) {
     t_artists = JSON.parse(body);
-    console.log(t_artists);
+    //console.log(t_artists);
   });
 
   // Get top tracks
@@ -184,7 +184,7 @@ app.get('/recs', function(req, res){
   }
   request.get(top_tracks_options, function(error, response, body) {
     t_tracks = JSON.parse(body);
-    console.log(t_tracks);
+    //console.log(t_tracks);
   });
 
   // Data & Options for Spotify recommendations request

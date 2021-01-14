@@ -184,24 +184,20 @@ app.get('/recs', function(req, res){
   }
   request.get(top_tracks_options, function(error, response, body) {
     t_tracks = JSON.parse(body);
-    console.log(t_tracks.items[2]);
+    //console.log(t_tracks.items[2]);
   });
 
   // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
     //seed_artists: '',
-    seed_tracks: t_tracks.items[0].id + ","
-               + t_tracks.items[1].id + ","
-               + t_tracks.items[2].id + ","
-               + t_tracks.items[3].id + ","
-               + t_tracks.items[4].id
+    seed_tracks: t_tracks.items[0].id
   });
   var options = {
     url: 'https://api.spotify.com/v1/recommendations?' + data,
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
-  //console.log(options);
+  console.log(options);
 
   // Send recommendations request
   request.get(options, function(error, response, body) {

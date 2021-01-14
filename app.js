@@ -184,7 +184,7 @@ app.get('/recs', function(req, res){
   }
   request.get(top_tracks_options, function(error, response, body) {
     t_tracks = JSON.parse(body);
-    //console.log(t_tracks);
+    console.log(t_tracks);
   });
 
   // Data & Options for Spotify recommendations request
@@ -201,11 +201,11 @@ app.get('/recs', function(req, res){
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
-  console.log(options);
+  //console.log(options);
 
   // Send recommendations request
   request.get(options, function(error, response, body) {
-    console.log(body);
+    //console.log(body);
 
     var recommendations = body;
 

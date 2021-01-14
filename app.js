@@ -166,9 +166,6 @@ app.get('/recs', function(req, res){
     url: 'https://api.spotify.com/v1/me/top/artists',
     headers: {
       'Authorization': 'Bearer ' + spotifyApi.access_token
-    },
-    body: {
-      limit: 50
     }
   }
   request.get(top_artists_options, function(error, response, body) {

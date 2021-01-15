@@ -160,7 +160,8 @@ app.get('/refresh_token', function(req, res) {
 // Sends request for recommendations to spotify API
 // seed: JSON array of spotify IDs, either tracks or artists
 // mode: string equal to either 'artist' or 'track'
-function recommend(seed, mode) {
+// userid: the userid value
+function recommend(seed, mode, userid) {
 
     // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
@@ -252,7 +253,7 @@ app.get('/recs', function(req, res){
     for (var i = 1; i < t_artists.items.length; i++) {
       t_a_l.push(t_artists.items[i]);
     }
-    recommend(t_a_l, 'artists');
+    recommend(t_a_l, 'artists', userid);
   });
 
   // Get top tracks

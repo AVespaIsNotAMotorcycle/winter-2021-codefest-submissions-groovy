@@ -157,47 +157,33 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/recs', function(req, res){
+// Sends request for recommendations to spotify API
+// seed: JSON array of spotify IDs, either tracks or artists
+// mode: string equal to either 'artist' or 'track'
+function recommend(seed, mode) {
 
-  var userid = req.query.user_id;
-
-  // Get top artists
-  var t_artists = "";
-  var top_artists_options = {
-    url: 'https://api.spotify.com/v1/me/top/artists',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
-    }
-  }
-  request.get(top_artists_options, function(error, response, body) {
-    t_artists = JSON.parse(body);
-    //console.log(t_artists);
-  });
-
-  // Get top tracks
-  //var t_tracks = "";
-  var top_tracks_options = {
-    url: 'https://api.spotify.com/v1/me/top/tracks',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
-    }
-  }
-  var t_tracks = request.get(top_tracks_options, function(error, response, body) {
-    t_tracks = JSON.parse(body);
-    //console.log(t_tracks.items[2]);
-  });
-  console.log(t_tracks);
-  // Data & Options for Spotify recommendations request
+    // Data & Options for Spotify recommendations request
   var data = querystring.stringify({
-    //seed_artists: '',
-    seed_tracks: t_tracks.items[0].id
+    seed_artists: ''
   });
+
+  if (mode == 'artists') {
+    data = querystring.stringify({
+      seed_artists: seed
+    });
+  }
+  else {
+    data = querystring.stringify({
+      seed_tracks: seed
+    });
+  }
+
   var options = {
     url: 'https://api.spotify.com/v1/recommendations?' + data,
     headers: { 'Authorization': 'Bearer ' + spotifyApi.access_token },
     json: true
   };
-  console.log(options);
+  //console.log(options);
 
   // Send recommendations request
   request.get(options, function(error, response, body) {
@@ -245,6 +231,41 @@ app.get('/recs', function(req, res){
     });
 
     
+  });
+}
+
+app.get('/recs', function(req, res){
+
+  var userid = req.query.user_id;
+
+  // Get top artists
+  var t_artists = "";
+  var top_artists_options = {
+    url: 'https://api.spotify.com/v1/me/top/artists',
+    headers: {
+      'Authorization': 'Bearer ' + spotifyApi.access_token
+    }
+  }
+  request.get(top_artists_options, function(error, response, body) {
+    t_artists = JSON.parse(body);
+    t_a_l = new Array();
+    for (var i = 1; i < t_artists.items.length; i++) {
+      t_a_l.push(t_artists.items[i]);
+    }
+    recommend(t_a_l, 'artists');
+  });
+
+  // Get top tracks
+  var t_tracks = "";
+  var top_tracks_options = {
+    url: 'https://api.spotify.com/v1/me/top/tracks',
+    headers: {
+      'Authorization': 'Bearer ' + spotifyApi.access_token
+    }
+  }
+  request.get(top_tracks_options, function(error, response, body) {
+    //t_tracks = JSON.parse(body);
+    //console.log(t_tracks.items[2]);
   });
 
 });

@@ -105,7 +105,7 @@ exports.createGroovyPlaylist = function (userID, accessToken) {
     console.log("Called createGroovyPlaylist(" + userID + ", " + accessToken + ")");
 
     // Get top tracks
-    var top_tracks = getTopTracks(userID, accessToken);
+    var top_tracks = groovySpotify.getTopTracks(userID, accessToken);
 
     // Get recommendations, use top tracks as seed
     var seeds = {
@@ -126,6 +126,6 @@ exports.createGroovyPlaylist = function (userID, accessToken) {
     var playlist = createPlaylist(playlistInfo, userID, accessToken);
 
     // Populate playlist with recommendations
-    
+
 
 };

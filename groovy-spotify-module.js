@@ -106,6 +106,7 @@ exports.createGroovyPlaylist = function (userID, accessToken) {
 
     // Get top tracks
     var top_tracks = module.exports.getTopTracks(userID, accessToken);
+    console.log("test");
     console.log(top_tracks);
 
     // Get recommendations, use top tracks as seed

@@ -27,9 +27,11 @@ exports.getTopTracks = async function (userID, accessToken) {
     request.get(top_tracks_options, function(error, response, body) {
         //console.log(JSON.parse(body));
         if (error) {
+            console.log("Returning error to promise");
             return "Error";
         }
         else {
+            console.log("Returning success to promise");
             return JSON.parse(body);
         }
     });
@@ -112,7 +114,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
     let top_tracks = new Promise((resolve, reject) => {
-        let answer = module.exports.getTopTracks(userID, accessToken);
+        let answer = await module.exports.getTopTracks(userID, accessToken);
     
         if (answer == "Error") {
             reject("Promise resolved unsuccessfully");

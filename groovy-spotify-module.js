@@ -2,7 +2,7 @@ var request = require('request'); // "Request" library
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
-exports.getTopArtists = function (userID, accessToken) {
+exports.getTopArtists = async function (userID, accessToken) {
     var top_artists_options = {
         url: 'https://api.spotify.com/v1/me/top/artists',
         headers: {
@@ -16,7 +16,7 @@ exports.getTopArtists = function (userID, accessToken) {
 
 // Fetches the top tracks of a user
 // accessToken: security token allowing access to the web api
-exports.getTopTracks = function (userID, accessToken) {
+exports.getTopTracks = async function (userID, accessToken) {
     var top_tracks_options = {
         url: 'https://api.spotify.com/v1/me/top/tracks',
         headers: {
@@ -38,7 +38,7 @@ exports.getTopTracks = function (userID, accessToken) {
 //      }
 //      with up to 5 total objects split across those three categories
 // accessToken: security token allowing access to the web api
-exports.getRecommendations = function (seeds, accessToken) {
+exports.getRecommendations = async function (seeds, accessToken) {
     var options = {
         url: 'https://api.spotify.com/v1/recommendations?' + data,
         body: seeds,
@@ -59,7 +59,7 @@ exports.getRecommendations = function (seeds, accessToken) {
 //          'description': string (optional)
 //          'public': bool (optional)
 //      }
-exports.createPlaylist = function (playlistInfo, userID, accessToken) {
+exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
     var playlist_options = {
         url: 'https://api.spotify.com/v1/users/' + userID + '/playlists',
         body: playlistInfo,
@@ -79,7 +79,7 @@ exports.createPlaylist = function (playlistInfo, userID, accessToken) {
 // playlistID: spotify ID of the playlist being modified
 // tracks: array of track URIs
 // accessToken: security token allowing access to the web api
-exports.addToPlaylist = function (playlistID, tracks, accessToken) {
+exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     var tracksList = tracks[0];
     if (tracks.length > 1) {
         for (var i = 0; i < tracks.length; i++) {
@@ -105,7 +105,7 @@ exports.addToPlaylist = function (playlistID, tracks, accessToken) {
 exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
-    var top_tracks = await module.exports.getTopTracks(userID, accessToken);
+    let top_tracks = await module.exports.getTopTracks(userID, accessToken);
     console.log("test");
     console.log(top_tracks);
 

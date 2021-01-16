@@ -120,6 +120,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
             reject("Promise resolved unsuccessfully");
         }
         else {
+            console.log("Recieved success, printing:");
+            console.log(answer);
             resolve(answer);
         }
     });

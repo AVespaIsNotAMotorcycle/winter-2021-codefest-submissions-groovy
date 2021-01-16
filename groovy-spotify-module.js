@@ -10,6 +10,7 @@ exports.getTopArtists = function (userID, accessToken) {
         }
     }
     request.get(top_artists_options, function(error, response, body) {
+        console.log(body);
         return body;
     });
 };
@@ -117,13 +118,13 @@ exports.createGroovyPlaylist = function (userID, accessToken) {
                    + top_tracks.items[3].id + ','
                    + top_tracks.items[4].id
     };
-    var recommendations = getRecommendations(seeds, accessToken);
+    var recommendations = module.exports.getRecommendations(seeds, accessToken);
 
     // Create playlist
     var playlistInfo = {
         'name': "Groovy Recommendations"
     }
-    var playlist = createPlaylist(playlistInfo, userID, accessToken);
+    var playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
 
     // Populate playlist with recommendations
 

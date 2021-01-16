@@ -10,7 +10,8 @@ exports.getTopArtists = async function (userID, accessToken) {
         }
     }
     request.get(top_artists_options, function(error, response, body) {
-        return body;
+        console.log(JSON.parse(body));
+        return JSON.parse(body);
     });
 };
 
@@ -106,7 +107,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
     let top_tracks = await module.exports.getTopTracks(userID, accessToken);
-    console.log("test");
+
     console.log(top_tracks);
 
     // Get recommendations, use top tracks as seed

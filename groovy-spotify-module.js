@@ -17,7 +17,7 @@ exports.getTopArtists = async function (userID, accessToken) {
 
 // Fetches the top tracks of a user
 // accessToken: security token allowing access to the web api
-exports.getTopTracks = async function (userID, accessToken) {
+exports.getTopTracks = async function (userID, accessToken, myResolve, myReject) {
     var top_tracks_options = {
         url: 'https://api.spotify.com/v1/me/top/tracks',
         headers: {
@@ -27,12 +27,12 @@ exports.getTopTracks = async function (userID, accessToken) {
     request.get(top_tracks_options, function(error, response, body) {
         //console.log(JSON.parse(body));
         //return JSON.parse(body);
-        return new Promise(resolve => {
-            setTimeout(function() {
-                resolve(JSON.parse(body));
-                console.log("Returned top tracks");
-            }, 200);
-        });
+        if (error) {
+            myReject(response.statusCode);
+        }
+        else {
+            myResolve(JSON.parse(body));
+        }
     });
 };
 
@@ -112,7 +112,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
 exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
-    let top_tracks = await module.exports.getTopTracks(userID, accessToken);
+    let top_tracks = new Promise(module.exports.getTopTracks(userID, accessToken));
 
     console.log(top_tracks);
 

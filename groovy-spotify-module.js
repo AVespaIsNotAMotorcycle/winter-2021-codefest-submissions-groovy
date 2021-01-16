@@ -102,5 +102,5 @@ exports.addToPlaylist = function (playlistID, tracks, accessToken) {
 // userID: the spotify id of the user for whom the playlist is being made
 // accessToken: security token allowing access to the web api
 exports.createGroovyPlaylist = function (userID, accessToken) {
-
+    console.log("Called createGroovyPlaylist(" + userID + ", " + accessToken + ")");
 };

@@ -15,6 +15,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var groovySpotify = require('./groovy-spotify-module');
 
 var client_id = '62e70be4a3884d40b81f927e1dd0e7ee'; // Your client id
 var client_secret = '35024b6079c549dd9409356c2945ab8e'; // Your secret

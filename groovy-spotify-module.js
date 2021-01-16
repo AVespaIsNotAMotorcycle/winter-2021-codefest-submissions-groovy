@@ -103,4 +103,29 @@ exports.addToPlaylist = function (playlistID, tracks, accessToken) {
 // accessToken: security token allowing access to the web api
 exports.createGroovyPlaylist = function (userID, accessToken) {
     console.log("Called createGroovyPlaylist(" + userID + ", " + accessToken + ")");
+
+    // Get top tracks
+    var top_tracks = getTopTracks(userID, accessToken);
+
+    // Get recommendations, use top tracks as seed
+    var seeds = {
+        seed_artists: '',
+        seed_genres: '',
+        seed_tracks: top_tracks.items[0].id + ','
+                   + top_tracks.items[1].id + ','
+                   + top_tracks.items[2].id + ','
+                   + top_tracks.items[3].id + ','
+                   + top_tracks.items[4].id
+    };
+    var recommendations = getRecommendations(seeds, accessToken);
+
+    // Create playlist
+    var playlistInfo = {
+        'name': "Groovy Recommendations"
+    }
+    var playlist = createPlaylist(playlistInfo, userID, accessToken);
+
+    // Populate playlist with recommendations
+    
+
 };

@@ -10,7 +10,6 @@ exports.getTopArtists = function (userID, accessToken) {
         }
     }
     request.get(top_artists_options, function(error, response, body) {
-        console.log(body);
         return body;
     });
 };
@@ -26,7 +25,6 @@ exports.getTopTracks = function (userID, accessToken) {
     }
     console.log(top_tracks_options);
     request.get(top_tracks_options, function(error, response, body) {
-        console.log(body);
         return body;
     });
 };
@@ -107,7 +105,7 @@ exports.addToPlaylist = function (playlistID, tracks, accessToken) {
 exports.createGroovyPlaylist = function (userID, accessToken) {
 
     // Get top tracks
-    let top_tracks = module.exports.getTopTracks(userID, accessToken);
+    var top_tracks = await module.exports.getTopTracks(userID, accessToken);
     console.log("test");
     console.log(top_tracks);
 

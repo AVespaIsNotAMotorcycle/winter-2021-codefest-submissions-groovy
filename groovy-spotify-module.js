@@ -24,9 +24,15 @@ exports.getTopTracks = async function (userID, accessToken) {
           'Authorization': 'Bearer ' + accessToken
         }
     }
-    console.log(top_tracks_options);
     request.get(top_tracks_options, function(error, response, body) {
-        return body;
+        console.log(JSON.parse(body));
+        //return JSON.parse(body);
+        return new Promise(resolve => {
+            setTimeout(function() {
+                resolve(JSON.parse(body));
+                console.log("Returned top tracks");
+            });
+        });
     });
 };
 

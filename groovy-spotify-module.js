@@ -103,10 +103,10 @@ exports.addToPlaylist = function (playlistID, tracks, accessToken) {
 // userID: the spotify id of the user for whom the playlist is being made
 // accessToken: security token allowing access to the web api
 exports.createGroovyPlaylist = function (userID, accessToken) {
-    console.log("Called createGroovyPlaylist(" + userID + ", " + accessToken + ")");
 
     // Get top tracks
     var top_tracks = module.exports.getTopTracks(userID, accessToken);
+    console.log(top_tracks);
 
     // Get recommendations, use top tracks as seed
     var seeds = {

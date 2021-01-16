@@ -122,8 +122,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
         }
     });
 
-    console.log(top_tracks);
+    top_tracks.then((message) => {
+        console.log(message);
+    });
 
+    /*
     // Get recommendations, use top tracks as seed
     var seeds = {
         seed_artists: '',
@@ -144,5 +147,5 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Populate playlist with recommendations
 
-
+    */
 };

@@ -129,12 +129,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     });
 
     while (typeof top_tracks == 'undefined') {
-        
-    }
 
-    top_tracks.then((message) => {
-        console.log(message);
-    });
+    }
 
     /*
     // Get recommendations, use top tracks as seed

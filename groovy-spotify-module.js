@@ -116,13 +116,15 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     let top_tracks = new Promise((resolve, reject) => {
         let answer = module.exports.getTopTracks(userID, accessToken);
     
-        if (answer == "Error") {
-            reject("Promise resolved unsuccessfully");
-        }
-        else {
-            console.log("Recieved success, printing:");
-            console.log(answer);
-            resolve(answer);
+        if (typeof answer !== 'undefined') {
+            if (answer == "Error") {
+                reject("Promise resolved unsuccessfully");
+            }
+            else {
+                console.log("Recieved success, printing:");
+                console.log(answer);
+                resolve(answer);
+            }
         }
     });
 

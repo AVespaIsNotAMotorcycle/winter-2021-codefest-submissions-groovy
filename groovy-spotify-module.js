@@ -61,6 +61,7 @@ exports.getRecommendations = async function (seeds, accessToken) {
     return new Promise((resolve, reject) => {
         request.get(options, function(error, response, body) {
             if (error) {
+                console.log(response);
                 reject(response.statusCode);
             }
             else {

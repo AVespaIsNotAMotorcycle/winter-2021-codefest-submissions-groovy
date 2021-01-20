@@ -137,17 +137,18 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     top_tracks.then((res) => {
         console.log("Got top tracks");
 
-        top_tracks = JSON.parse(top_tracks);
+        top_tracks_body = JSON.parse(top_tracks);
+        console.log(top_tracks_body);
 
         // Get recommendations, use top tracks as seed
         var seeds = {
             seed_artists: '',
             seed_genres: '',
-            seed_tracks: top_tracks.items[0].id + ','
-                    + top_tracks.items[1].id + ','
-                    + top_tracks.items[2].id + ','
-                    + top_tracks.items[3].id + ','
-                    + top_tracks.items[4].id
+            seed_tracks: top_tracks_body.items[0].id + ','
+                    + top_tracks_body.items[1].id + ','
+                    + top_tracks_body.items[2].id + ','
+                    + top_tracks_body.items[3].id + ','
+                    + top_tracks_body.items[4].id
         };
         let recommendations = module.exports.getRecommendations(seeds, accessToken);
 

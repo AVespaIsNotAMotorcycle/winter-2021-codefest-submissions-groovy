@@ -83,7 +83,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
     var playlist_options = {
         url: 'https://api.spotify.com/v1/users/' + userID + '/playlists',
         body: playlistInfo,
-        //dataType:'json',
+        dataType:'json',
         headers: {
             'Authorization': 'Bearer ' + accessToken,
             'Content-Type': 'application/json',
@@ -162,7 +162,9 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
             // Create playlist
             var playlistInfo = {
-                'name': "Groovy Recommendations"
+                "name": "New Playlist",
+                "description": "New playlist description",
+                "public": false
             }
             let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
 

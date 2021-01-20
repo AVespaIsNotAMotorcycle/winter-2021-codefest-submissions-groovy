@@ -113,21 +113,9 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
 exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
-    let top_tracks = new Promise((resolve, reject) => {
-        let answer = module.exports.getTopTracks(userID, accessToken);
-    
-        if (typeof answer !== 'undefined') {
-            if (answer == "Error") {
-                reject("Promise resolved unsuccessfully");
-            }
-            else {
-                console.log("Recieved success, printing:");
-                console.log(answer);
-                resolve(answer);
-            }
-        }
-    });
-    top_tracks.then((res) => console.log(".then", res));
+    let top_tracks = module.exports.getTopTracks(userID, accessToken);
+
+    top_tracks.then((res) => console.log(top_tracks));
 
     /*
     // Get recommendations, use top tracks as seed

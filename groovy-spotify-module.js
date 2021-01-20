@@ -114,7 +114,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     // Get top tracks
     let top_tracks = new Promise((resolve, reject) => {
-        let answer = await module.exports.getTopTracks(userID, accessToken);
+        let answer = module.exports.getTopTracks(userID, accessToken);
     
         if (typeof answer !== 'undefined') {
             if (answer == "Error") {

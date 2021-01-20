@@ -136,6 +136,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
     top_tracks.then((res) => {
         console.log("Got top tracks");
+        console.log(top_tracks);
 
         top_tracks_body = JSON.parse(top_tracks);
         console.log(top_tracks_body);

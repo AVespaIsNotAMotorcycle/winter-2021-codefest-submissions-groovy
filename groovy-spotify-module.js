@@ -162,11 +162,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
             // Create playlist
             var playlistInfo = {
-                "name": "New Playlist",
-                "description": "New playlist description",
-                "public": false
+                name: "New Playlist",
+                description: "New playlist description",
+                public: false
             };
-            let playlist = module.exports.createPlaylist(JSON.parse(playlistInfo), userID, accessToken);
+            let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
 
             playlist.then((res) => {
                 console.log("Created playlist");

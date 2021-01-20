@@ -9,9 +9,15 @@ exports.getTopArtists = async function (userID, accessToken) {
           'Authorization': 'Bearer ' + accessToken
         }
     }
-    request.get(top_artists_options, function(error, response, body) {
-        console.log(JSON.parse(body));
-        return JSON.parse(body);
+    return new Promise((resolve, reject) => {
+        request.get(top_artists_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
     });
 };
 
@@ -26,7 +32,6 @@ exports.getTopTracks = async function (userID, accessToken) {
     }
     return new Promise((resolve, reject) => {
         request.get(top_tracks_options, function(error, response, body) {
-            //console.log(JSON.parse(body));
             if (error) {
                 reject(response.statusCode);
             }
@@ -53,8 +58,15 @@ exports.getRecommendations = async function (seeds, accessToken) {
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };
-    request.get(options, function(error, response, body) {
-        return body;
+    return new Promise((resolve, reject) => {
+        request.get(options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
     });
 };
 
@@ -78,9 +90,16 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
         }
       };
       // Send playlist creation request
-      request.post(playlist_options, function(error, response, p_body) {
-        return body;
-      });
+      return new Promise((resolve, reject) => {
+        request.post(playlist_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
+    });
 };
 
 // Populates a playlist with tracks
@@ -115,28 +134,35 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     // Get top tracks
     let top_tracks = module.exports.getTopTracks(userID, accessToken);
 
-    top_tracks.then((res) => console.log(top_tracks));
+    top_tracks.then((res) => {
+        console.log("Got top tracks");
 
-    /*
-    // Get recommendations, use top tracks as seed
-    var seeds = {
-        seed_artists: '',
-        seed_genres: '',
-        seed_tracks: top_tracks.items[0].id + ','
-                   + top_tracks.items[1].id + ','
-                   + top_tracks.items[2].id + ','
-                   + top_tracks.items[3].id + ','
-                   + top_tracks.items[4].id
-    };
-    var recommendations = module.exports.getRecommendations(seeds, accessToken);
+        // Get recommendations, use top tracks as seed
+        var seeds = {
+            seed_artists: '',
+            seed_genres: '',
+            seed_tracks: top_tracks.items[0].id + ','
+                    + top_tracks.items[1].id + ','
+                    + top_tracks.items[2].id + ','
+                    + top_tracks.items[3].id + ','
+                    + top_tracks.items[4].id
+        };
+        let recommendations = module.exports.getRecommendations(seeds, accessToken);
 
-    // Create playlist
-    var playlistInfo = {
-        'name': "Groovy Recommendations"
-    }
-    var playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+        recommendations.then((res) => {
+            console.log("Got recommendations");
 
-    // Populate playlist with recommendations
+            // Create playlist
+            var playlistInfo = {
+                'name': "Groovy Recommendations"
+            }
+            let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
 
-    */
+            playlist.then((res) => {
+                console.log("Created playlist");
+            });
+            // Populate playlist with recommendations
+        });
+
+    });
 };

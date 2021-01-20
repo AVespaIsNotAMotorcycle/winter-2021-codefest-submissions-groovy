@@ -24,16 +24,16 @@ exports.getTopTracks = async function (userID, accessToken) {
           'Authorization': 'Bearer ' + accessToken
         }
     }
-    request.get(top_tracks_options, function(error, response, body) {
-        //console.log(JSON.parse(body));
-        if (error) {
-            console.log("Returning error to promise");
-            return "Error";
-        }
-        else {
-            console.log("Returning success to promise");
-            return JSON.parse(body);
-        }
+    return new Promise((resolve, reject) => {
+        request.get(top_tracks_options, function(error, response, body) {
+            //console.log(JSON.parse(body));
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
     });
 };
 

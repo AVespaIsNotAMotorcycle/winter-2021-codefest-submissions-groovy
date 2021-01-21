@@ -191,11 +191,14 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
             playlist.then((res) => {
                 console.log("Created playlist");
+                playlist_res = res;
                 
                 // Populate playlist with recommendations
-                //var rec_s = [];
-                //for (var i = 0; i < recommendations)
-
+                var rec_s = [];
+                for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                    rec_s.append(rec_tracks.tracks[i].uri)
+                }
+                module.exports.addToPlaylist(playlist_res.id, rec_s, userID);
 
             });
         });

@@ -53,10 +53,13 @@ exports.getTopTracks = async function (userID, accessToken) {
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
     var append = "";
+    if (seeds.seed_artists != "") {
+        console.log(seeds.seed_artists);
+    }
     
     var options = {
         url: 'https://api.spotify.com/v1/recommendations?'/* + data*/,
-        body: seeds,
+        //body: seeds,
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };

@@ -52,9 +52,11 @@ exports.getTopTracks = async function (userID, accessToken) {
 //      with up to 5 total objects split across those three categories
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
+    var append = "";
+    
     var options = {
-        url: 'https://api.spotify.com/v1/recommendations?' + JSON.stringify(seeds),
-        //body: seeds,
+        url: 'https://api.spotify.com/v1/recommendations?'/* + data*/,
+        body: seeds,
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };

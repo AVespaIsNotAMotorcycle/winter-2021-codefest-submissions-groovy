@@ -144,10 +144,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     top_tracks.then((res) => {
         console.log("Got top tracks");
         var t_tracks = JSON.parse(res);
-        console.log(t_tracks);
+        //console.log(t_tracks);
 
         top_tracks_body = JSON.parse(res);
-        console.log(res);
+        //console.log(res);
 
         // Get recommendations, use top tracks as seed
         var seeds = {

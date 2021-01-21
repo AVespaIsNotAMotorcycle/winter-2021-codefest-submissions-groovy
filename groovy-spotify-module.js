@@ -90,7 +90,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
             'Accept': 'application/json'
         }
       };
-      console.log(JSON.parse(playlist_options));
+      console.log(playlist_options);
       // Send playlist creation request
       return new Promise((resolve, reject) => {
         request.post(playlist_options, function(error, response, body) {

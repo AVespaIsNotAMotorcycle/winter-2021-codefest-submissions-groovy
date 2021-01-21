@@ -56,6 +56,12 @@ exports.getRecommendations = async function (seeds, accessToken) {
     if (seeds.seed_artists != "") {
         console.log(seeds.seed_artists);
     }
+    if (seeds.seed_genres != "") {
+        console.log(seeds.seed_genres);
+    }
+    if (seeds.seed_tracks != "") {
+        console.log(seeds.seed_tracks);
+    }
     
     var options = {
         url: 'https://api.spotify.com/v1/recommendations?'/* + data*/,

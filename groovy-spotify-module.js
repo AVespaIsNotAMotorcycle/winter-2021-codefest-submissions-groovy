@@ -200,7 +200,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 for (var i = 0; i < rec_tracks.tracks.length; i++) {
                     rec_s.push(rec_tracks.tracks[i].uri)
                 }
-                module.exports.addToPlaylist(playlist_res.id, rec_s, userID);
+                module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
 
             });
         });

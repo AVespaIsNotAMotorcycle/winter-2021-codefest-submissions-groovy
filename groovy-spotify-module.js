@@ -55,27 +55,26 @@ exports.getRecommendations = async function (seeds, accessToken) {
     var append = "";
     console.log(seeds);
     if (seeds.seed_artists != "") {
-        console.log(seeds.seed_artists);
+        //console.log(seeds.seed_artists);
         append += "seed_artists=" + seeds.seed_artists;
     }
     if (seeds.seed_genres != "") {
         if (append.length > 0) {
             append += '&';
         }
-        console.log(seeds.seed_genres);
+        //console.log(seeds.seed_genres);
         append += "seed_genres=" + seeds.seed_genres;
     }
     if (seeds.seed_tracks != "") {
         if (append.length > 0) {
             append += '&';
         }
-        console.log(seeds.seed_tracks);
+        //console.log(seeds.seed_tracks);
         append += "seed_tracks=" + seeds.seed_tracks;
     }
     
     var options = {
         url: 'https://api.spotify.com/v1/recommendations?' + append,
-        //body: seeds,
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };

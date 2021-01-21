@@ -143,6 +143,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
           'Content-Type': 'application/json',
         }
     }
+    console.log(s_options);
     request.post(s_options, function(error, response, body) {
         return body;
     });

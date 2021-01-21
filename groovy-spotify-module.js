@@ -58,6 +58,8 @@ exports.getRecommendations = async function (seeds, accessToken) {
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };
+    console.log("Retrieving recommendations");
+    console.log(options);
     return new Promise((resolve, reject) => {
         request.get(options, function(error, response, body) {
             if (error) {

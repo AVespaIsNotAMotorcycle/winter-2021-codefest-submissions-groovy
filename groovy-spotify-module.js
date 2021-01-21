@@ -70,7 +70,7 @@ exports.getRecommendations = async function (seeds, accessToken) {
             append += '&';
         }
         console.log(seeds.seed_tracks);
-        append += "seed_tracks=" + JSON.stringify(seeds.seeds_tracks);
+        append += "seed_tracks=" + seeds.seed_tracks;
     }
     
     var options = {

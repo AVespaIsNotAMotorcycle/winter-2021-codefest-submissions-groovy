@@ -56,12 +56,21 @@ exports.getRecommendations = async function (seeds, accessToken) {
     console.log(seeds);
     if (seeds.seed_artists != "") {
         console.log(seeds.seed_artists);
+        append += "seed_artists=" + seeds.seed_artists;
     }
     if (seeds.seed_genres != "") {
+        if (append.length > 0) {
+            append += '&';
+        }
         console.log(seeds.seed_genres);
+        append += "seed_genres=" + seeds.seed_genres;
     }
     if (seeds.seed_tracks != "") {
+        if (append.length > 0) {
+            append += '&';
+        }
         console.log(seeds.seed_tracks);
+        append += "seed_tracks=" + seeds.seeds_tracks;
     }
     
     var options = {

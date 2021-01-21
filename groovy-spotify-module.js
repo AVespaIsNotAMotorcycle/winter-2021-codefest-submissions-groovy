@@ -74,7 +74,7 @@ exports.getRecommendations = async function (seeds, accessToken) {
     }
     
     var options = {
-        url: 'https://api.spotify.com/v1/recommendations?'/* + data*/,
+        url: 'https://api.spotify.com/v1/recommendations?' + append,
         //body: seeds,
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true

@@ -86,7 +86,6 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
       };
-      console.log(playlist_options);
       // Send playlist creation request
       return new Promise((resolve, reject) => {
         request.post(playlist_options, function(error, response, body) {
@@ -156,6 +155,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
         recommendations.then((res) => {
             console.log("Got recommendations");
+            var rec_tracks = res;
+            console.log(rec_tracks);
 
             // Create playlist
             var playlistInfo = {
@@ -167,8 +168,13 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
             playlist.then((res) => {
                 console.log("Created playlist");
+                
+                // Populate playlist with recommendations
+                //var rec_s = [];
+                //for (var i = 0; i < recommendations)
+
+
             });
-            // Populate playlist with recommendations
         });
 
     });

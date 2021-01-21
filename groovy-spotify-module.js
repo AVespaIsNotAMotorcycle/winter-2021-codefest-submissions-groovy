@@ -53,6 +53,7 @@ exports.getTopTracks = async function (userID, accessToken) {
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
     var append = "";
+    console.log(seeds);
     if (seeds.seed_artists != "") {
         console.log(seeds.seed_artists);
     }

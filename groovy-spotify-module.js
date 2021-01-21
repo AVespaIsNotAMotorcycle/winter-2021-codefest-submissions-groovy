@@ -83,12 +83,8 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
     var playlist_options = {
         url: 'https://api.spotify.com/v1/users/' + userID + '/playlists',
         body: playlistInfo,
-        dataType:'json',
-        headers: {
-            'Authorization': 'Bearer ' + accessToken,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        headers: { 'Authorization': 'Bearer ' + accessToken },
+        json: true
       };
       console.log(playlist_options);
       // Send playlist creation request

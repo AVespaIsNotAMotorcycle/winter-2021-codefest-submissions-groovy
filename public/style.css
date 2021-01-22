@@ -24,7 +24,9 @@ h1,h2 {
   color: #fff;
   background-color: #141919;
   border-color: #1DB954;
-  padding-bottom: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .btn-primary:hover {

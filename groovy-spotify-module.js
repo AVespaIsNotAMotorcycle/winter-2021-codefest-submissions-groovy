@@ -155,54 +155,60 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
 // accessToken: security token allowing access to the web api
 exports.createGroovyPlaylist = async function (userID, accessToken) {
 
-    // Get top tracks
-    let top_tracks = module.exports.getTopTracks(userID, accessToken);
+    return new Promise((resolve, reject) => {
 
-    top_tracks.then((res) => {
-        console.log("Got top tracks");
-        var t_tracks = JSON.parse(res);
-        //console.log(t_tracks);
+        // Get top tracks
+        let top_tracks = module.exports.getTopTracks(userID, accessToken);
 
-        top_tracks_body = JSON.parse(res);
-        //console.log(res);
+        top_tracks.then((res) => {
+            console.log("Got top tracks");
+            var t_tracks = JSON.parse(res);
+            //console.log(t_tracks);
 
-        // Get recommendations, use top tracks as seed
-        var seeds = {
-            seed_artists: '',
-            seed_genres: '',
-            seed_tracks: top_tracks_body.items[0].id + ','
-                    + top_tracks_body.items[1].id + ','
-                    + top_tracks_body.items[2].id + ','
-                    + top_tracks_body.items[3].id + ','
-                    + top_tracks_body.items[4].id
-        };
-        let recommendations = module.exports.getRecommendations(seeds, accessToken);
+            top_tracks_body = JSON.parse(res);
+            //console.log(res);
 
-        recommendations.then((res) => {
-            console.log("Got recommendations");
-            var rec_tracks = res;//JSON.parse(res);
-            console.log(rec_tracks);
-
-            // Create playlist
-            var playlistInfo = {
-                name: "New Playlist",
-                description: "New playlist description",
-                public: false
+            // Get recommendations, use top tracks as seed
+            var seeds = {
+                seed_artists: '',
+                seed_genres: '',
+                seed_tracks: top_tracks_body.items[0].id + ','
+                        + top_tracks_body.items[1].id + ','
+                        + top_tracks_body.items[2].id + ','
+                        + top_tracks_body.items[3].id + ','
+                        + top_tracks_body.items[4].id
             };
-            let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+            let recommendations = module.exports.getRecommendations(seeds, accessToken);
 
-            playlist.then((res) => {
-                console.log("Created playlist");
-                playlist_res = res;
-                
-                // Populate playlist with recommendations
-                var rec_s = [];
-                for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                    rec_s.push(rec_tracks.tracks[i].uri)
-                }
-                module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+            recommendations.then((res) => {
+                console.log("Got recommendations");
+                var rec_tracks = res;//JSON.parse(res);
+                console.log(rec_tracks);
 
+                // Create playlist
+                var playlistInfo = {
+                    name: "New Playlist",
+                    description: "New playlist description",
+                    public: false
+                };
+                let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+
+                playlist.then((res) => {
+                    console.log("Created playlist");
+                    playlist_res = res;
+                    
+                    // Populate playlist with recommendations
+                    var rec_s = [];
+                    for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                        rec_s.push(rec_tracks.tracks[i].uri)
+                    }
+                    module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+
+                    resolve(playlist_res.id);
+
+                });
             });
+
         });
 
     });

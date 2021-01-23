@@ -29,6 +29,10 @@
       <div id="top-artists"></div>
     </script>
 
+    <script id="recs-playlist-template" type="text/x-handlebars-template">
+      <iframe src="https://open.spotify.com/embed/playlist/2f4oTUtUJPnHCB24d2jSCV" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </script>
+
     <script id="top-artists-template" type="text/x-handlebars-template">
       <dl class="dl-horizontal">
         <dt>Top Artists: </dt><dd>{{items.0.name}}</dd>
@@ -107,6 +111,7 @@
 
         var access_token = params.access_token,
             refresh_token = params.refresh_token,
+            playlist = params.playlist,
             error = params.error;
 
         var userid = '';
@@ -137,6 +142,8 @@
                   $('#loggedin').show();
                 }
             });
+          } else if (playlist) {
+              recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
           } else {
               // render initial screen
               $('#login').show();

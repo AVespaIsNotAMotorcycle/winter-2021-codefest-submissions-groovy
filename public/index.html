@@ -158,10 +158,11 @@
               }
             }).done(function(data) {
 
-              var playlist_link = "https://open.spotify.com/embed/playlist/" + data.playlist;
-              console.log(playlist_link);
-              var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
-              playlist_embed.src = playlist_link;
+              console.log(data);
+              //var playlist_link = "https://open.spotify.com/embed/playlist/" + data.playlist;
+              //console.log(playlist_link);
+              //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
+              //playlist_embed.src = playlist_link;
 
               recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
               

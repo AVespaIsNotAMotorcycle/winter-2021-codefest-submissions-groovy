@@ -138,13 +138,13 @@
                   $('#loggedin').show();
                 }
             });
-          } else if (playlist) { 
+          } /*else if (playlist) { 
               // Render playlist embed
               var playlistLink = "https://open.spotify.com/embed/playlist/" + playlist;
               var playlistCode = <iframe src={{playlistLink}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               document.getElementById('embed-playlist').innerHTML = playlistCode;
 
-          } else {
+          }*/ else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();

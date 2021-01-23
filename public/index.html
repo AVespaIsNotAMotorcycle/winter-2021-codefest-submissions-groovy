@@ -159,7 +159,10 @@
             }).done(function(data) {
 
               console.log(data);
-              var playlist_link = "https://open.spotify.com/embed/playlist/" + data.playlist;
+              var pl = {
+                playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
+              };
+
               console.log(playlist_link);
               //console.log(playlist_link);
               //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
@@ -168,7 +171,7 @@
                   recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
               //recsPlaceholder = document.getElementById('recs');
 
-              recsPlaceholder.innerHTML = recsPlaylistTemplate(playlist_link);
+              recsPlaceholder.innerHTML = recsPlaylistTemplate(pl);
               
             });
           }, false);

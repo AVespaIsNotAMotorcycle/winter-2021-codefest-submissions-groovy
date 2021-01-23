@@ -30,7 +30,7 @@
     </script>
 
     <script id="recs-playlist-template" type="text/x-handlebars-template">
-      <iframe src="https://open.spotify.com/embed/playlist/2f4oTUtUJPnHCB24d2jSCV" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <iframe src={{playlist_link}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </script>
 
     <script id="top-artists-template" type="text/x-handlebars-template">
@@ -164,8 +164,11 @@
               //console.log(playlist_link);
               //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
               //playlist_embed.src = playlist_link;
+              var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
+                  recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource),
+              //recsPlaceholder = document.getElementById('recs');
 
-              recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
+              recsPlaceholder.innerHTML = recsPlaylistTemplate(playlist_link);
               
             });
           }, false);

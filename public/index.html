@@ -159,7 +159,7 @@
             }).done(function(data) {
 
               var playlist_link = "https://open.spotify.com/embed/playlist/" + data.playlist;
-              //var playlist_embed = <iframe src={playlist_link} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
+              var playlist_embed = <iframe src={{playlist_link}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
 
               recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
               

@@ -142,9 +142,9 @@
                   $('#loggedin').show();
                 }
             });
-          } else if (playlist) {
+          } /*else if (playlist) {
               recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
-          } else {
+          } */else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();
@@ -157,11 +157,9 @@
                 'user_id': userid
               }
             }).done(function(data) {
-              /*access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });*/
+
+              recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
+              
             });
           }, false);
 

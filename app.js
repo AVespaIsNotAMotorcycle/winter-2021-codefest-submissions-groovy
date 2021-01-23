@@ -163,7 +163,10 @@ app.get('/recs', function(req, res){
   let groovyPlaylist = groovySpotify.createGroovyPlaylist(req.query.user_id, spotifyApi.access_token);
   groovyPlaylist.then((nres) => { 
     console.log("app.js recieved groovyPlaylist");
-    res.redirect('#/' + querystring.stringify({ playlist: nres }));
+    res.send({
+      'playlist': nres
+    });
+    //res.redirect('#/' + querystring.stringify({ playlist: nres }));
   });
 
 });

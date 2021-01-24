@@ -15,6 +15,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var groovySpotify = require('./groovy-spotify-module');
 
 var client_id = '62e70be4a3884d40b81f927e1dd0e7ee'; // Your client id
 var client_secret = '35024b6079c549dd9409356c2945ab8e'; // Your secret
@@ -159,58 +160,20 @@ app.get('/refresh_token', function(req, res) {
 
 app.get('/recs', function(req, res){
 
-  var userid = req.query.userid;
-
-  // Data & Options for Spotify recommendations request
-  var data = querystring.stringify({
-    seed_artists: '4NHQUGzhtTLFvgF5SZesLK',
-    seed_tracks: '0c6xIDDpzE81m2q797ordA'
-  });
-  var options = {
-    hostname: 'api.spotify.com',
-    path: '/v1/recommendations?' + data,
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
-    }
-  };
-
-  // Make request to api.spotify.com for recs
-  var recs = https.request(options, res => {
-    console.log(`Recommendations: statusCode: ${res.statusCode}`)
-  
-    res.on('data', d => {
-      //process.stdout.write(d)
-    })
+  let groovyPlaylist = groovySpotify.createGroovyPlaylist(req.query.user_id, spotifyApi.access_token);
+  groovyPlaylist.then((nres) => { 
+    console.log("app.js recieved groovyPlaylist");
+    res.send({
+      'playlist': nres
+    });
+    //res.redirect('#/' + querystring.stringify({ playlist: nres }));
   });
 
-  recs.end();
-
-  // Make playlist
-  options = {
-    url: 'api.spotify.com/v1/users/' + userid + '/playlists',
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + spotifyApi.access_token
-    },
-    contentType: "application/json",
-    data : JSON.stringify({
-      name: "New Playlist",
-      description: "New playlist description",
-      public: false
-    })
-  }
-  var playlist = https.request(options, res => {
-    console.log(`Playlist: statusCode: ${res.statusCode}`)
-  
-    res.on('data', d => {
-      process.stdout.write(d)
-    })
-  });
-  playlist.end();
-
-  // Pass playlist ID back to embed
 });
+
+process.on('uncaughtException', function (err) {
+  console.log(err);
+}); 
 
 console.log('Listening on 8080');
 app.listen(8080);

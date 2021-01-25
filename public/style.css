@@ -61,7 +61,7 @@ h1,h2 {
 }
 
 .grid-container {
-  display: grid;
+  display: inline-grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;

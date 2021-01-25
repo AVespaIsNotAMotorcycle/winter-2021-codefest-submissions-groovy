@@ -84,3 +84,9 @@ h1,h2 {
   grid-row-start: 2;
   grid-row-end: 2;
 }
+
+.grid-line{
+  border: 1px solid black; // try border-left and border-right
+  height: 999px;
+  // play with positions - fixed ect..
+}

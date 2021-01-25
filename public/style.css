@@ -89,9 +89,11 @@ h1,h2 {
 }
 
 .imageplate {
-  grid-area: imageplate;
+  grid-row: 1 / 1;
+  grid-column: 1 / 2;
 }
 
 .nameplate {
-  grid-area: nameplate;
+  grid-row: 1 / 1;
+  grid-column: 3 / 4;
 }

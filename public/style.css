@@ -81,6 +81,7 @@ h1,h2 {
 
 .profile-image {
   border-radius: 50%;
+  text-align: right;  
 }
 
 .imageplate {

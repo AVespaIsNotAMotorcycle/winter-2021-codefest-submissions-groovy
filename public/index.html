@@ -166,6 +166,8 @@
           }
 
           document.getElementById('get-recs').addEventListener('click', function() {
+            console.log("Recs clicked");
+
             $.ajax({
               url: '/recs',
               data: {

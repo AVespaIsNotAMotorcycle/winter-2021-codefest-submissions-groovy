@@ -122,12 +122,13 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
+            /*
             // render oauth info
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
               refresh_token: refresh_token
             });
-
+            */
             recsPlaceholder.innerHTML = recsTemplate();
 
             $.ajax({
@@ -136,7 +137,7 @@
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+                  //userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
                   userid = response.id;
 

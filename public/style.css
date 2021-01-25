@@ -25,6 +25,7 @@ h1,h2 {
   background-color: #141919;
   border-color: #1DB954;
   padding-bottom: 50px;
+  border-radius: 50%;
 }
 
 .btn-primary:hover {
@@ -35,4 +36,8 @@ h1,h2 {
 
 .container,#login-button{
   text-align: center;
+}
+
+.horizontal-div {
+  float: left;
 }

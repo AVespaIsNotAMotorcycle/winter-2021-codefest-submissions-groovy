@@ -98,3 +98,11 @@ h1,h2 {
 .profile-image {
   border-radius: 50%;
 }
+
+.imageplate {
+  grid-row: 1;
+}
+
+.nameplate {
+  grid-row: 1;
+}

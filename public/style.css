@@ -25,12 +25,6 @@ h1,h2 {
   background-color: #141919;
   border-color: #1DB954;
   padding-bottom: 50px;
-}
-
-.btn-primary:hover {
-  color: #191414;
-  background-color: #1DB954;
-  border-color: #1DB954;
 
   background:transparent;
   border: 2px solid transparent;
@@ -54,6 +48,12 @@ h1,h2 {
   transition: all 0.2s ease-in-out 0s;
 
   border-radius:20em; 
+}
+
+.btn-primary:hover {
+  color: #191414;
+  background-color: #1DB954;
+  border-color: #1DB954;
 }
 
 .container,#login-button{

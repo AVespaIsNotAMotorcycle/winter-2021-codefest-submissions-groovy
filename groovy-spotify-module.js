@@ -131,7 +131,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     var tracksList = tracks[0];
     if (tracks.length > 1) {
-        for (var i = 0; i < tracks.length; i++) {
+        for (var i = 1; i < tracks.length; i++) {
             tracksList += "," + tracks[i];
         }
     }
@@ -187,8 +187,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                 // Create playlist
                 var playlistInfo = {
-                    name: "New Playlist",
-                    description: "New playlist description",
+                    name: "Groovy",
+                    description: "",
                     public: false
                 };
                 let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);

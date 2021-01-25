@@ -68,6 +68,7 @@ h1,h2 {
 .grid-item {
   border-color: aqua;
   border-width: 2px;
+  border-style: dotted;
 }
 
 #grid-header {

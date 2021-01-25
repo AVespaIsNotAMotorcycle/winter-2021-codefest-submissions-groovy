@@ -37,10 +37,27 @@ h1,h2 {
   text-align: center;
 }
 
-.horizontal-div {
-  float: left;
-}
-
 .grid-container {
   display: grid;
+}
+
+#grid-header {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+rec-button-div {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+
+rec-playlist-div {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 2;
 }

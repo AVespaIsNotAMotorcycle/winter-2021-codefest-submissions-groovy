@@ -62,12 +62,10 @@ h1,h2 {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas: 
-    "header header header header"
-    "main main . sidebar"
-    "footer footer footer footer";
+    "pad imageplate nameplate pad"
 }
 
 .grid-item {
@@ -86,9 +84,9 @@ h1,h2 {
 }
 
 .imageplate {
-  grid-area: main;
+  grid-area: imageplate;
 }
 
 .nameplate {
-  grid-area: sidebar;
+  grid-area: nameplate;
 }

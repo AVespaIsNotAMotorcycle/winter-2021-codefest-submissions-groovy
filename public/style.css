@@ -101,8 +101,10 @@ h1,h2 {
 
 .imageplate {
   grid-row: 1;
+  grid-column: 1;
 }
 
 .nameplate {
   grid-row: 1;
+  grid-column: 2;
 }

@@ -48,14 +48,14 @@ h1,h2 {
   grid-row-end: 1;
 }
 
-rec-button-div {
+#rec-button-div {
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 2;
   grid-row-end: 2;
 }
 
-rec-playlist-div {
+#rec-playlist-div {
   grid-column-start: 2;
   grid-column-end: 2;
   grid-row-start: 2;

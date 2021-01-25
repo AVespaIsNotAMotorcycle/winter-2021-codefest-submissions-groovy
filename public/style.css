@@ -63,6 +63,7 @@ h1,h2 {
 .grid-container {
   display: inline-grid;
   grid-gap: 50px;
+  grid-template-columns: auto auto auto auto;
 }
 
 .grid-item {

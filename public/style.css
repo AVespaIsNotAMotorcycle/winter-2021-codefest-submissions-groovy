@@ -85,12 +85,12 @@ h1,h2 {
 
 .imageplate {
   grid-row: 1 / 1;
-  grid-column: 1 / 2;
+  grid-column: 2 / 2;
   justify-self: end;
 }
 
 .nameplate {
   grid-row: 1 / 1;
-  grid-column: 3 / 4;
+  grid-column: 3 / 3;
   justify-self: start;
 }

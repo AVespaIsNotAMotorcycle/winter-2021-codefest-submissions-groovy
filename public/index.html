@@ -183,9 +183,7 @@
               };
 
               console.log(pl);
-              //console.log(playlist_link);
-              //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
-              //playlist_embed.src = playlist_link;
+
               var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
                   recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
                   recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
@@ -194,9 +192,9 @@
               
             });
           }, false);
-
+          console.log("Added event listener for recs button");
           
-          /*document.getElementById('obtain-new-token').addEventListener('click', function() {
+          document.getElementById('obtain-new-token').addEventListener('click', function() {
             $.ajax({
               url: '/refresh_token',
               data: {
@@ -209,7 +207,7 @@
                 refresh_token: refresh_token
               });
             });
-          }, false);*/
+          }, false);
         }
       })();
     </script>

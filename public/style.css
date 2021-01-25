@@ -65,6 +65,10 @@ h1,h2 {
   grid-row-gap: 50px;
 }
 
+.grid-item {
+  background-color: aqua;
+}
+
 #grid-header {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -87,7 +91,6 @@ h1,h2 {
 }
 
 .grid-line{
-  border: 1px solid black; // try border-left and border-right
+  border: 1px solid black;
   height: 999px;
-  // play with positions - fixed ect..
 }

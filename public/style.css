@@ -62,7 +62,7 @@ h1,h2 {
 
 .grid-container {
   display: inline-grid;
-  grid-row-gap: 50px;
+  grid-gap: 50px;
 }
 
 .grid-item {

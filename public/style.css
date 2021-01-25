@@ -40,3 +40,7 @@ h1,h2 {
 .horizontal-div {
   float: left;
 }
+
+.grid-container {
+  display: grid;
+}

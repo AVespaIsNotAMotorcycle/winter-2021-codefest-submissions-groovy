@@ -62,7 +62,8 @@ h1,h2 {
 
 .grid-container {
   display: inline-grid;
-  width: 100%;
+  width:fit-content; 
+  height:fit-content;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas: 

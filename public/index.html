@@ -91,6 +91,21 @@
             recsPlaceholder.innerHTML = recsTemplate();
             console.log("Placing recs button");
 
+            $.ajax({
+                url: 'https://api.spotify.com/v1/me',
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                  recsPlaceholder.innerHTML = recsTemplate(response);
+
+                  userid = response.id;
+
+                  $('#login').hide();
+                  $('#loggedin').show();
+                }
+            });
+
             document.getElementById('get-recs').addEventListener('click', ()=>{
               console.log("Recs clicked");
 
@@ -116,21 +131,6 @@
                 
               });
             }, false);
-
-            $.ajax({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  recsPlaceholder.innerHTML = recsTemplate(response);
-
-                  userid = response.id;
-
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
-            });
           } /*else if (playlist) {
               recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
           } */else {

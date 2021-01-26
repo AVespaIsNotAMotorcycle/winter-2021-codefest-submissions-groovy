@@ -142,7 +142,7 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                         }
                     }
                 }
-                resolve(false);
+                resolve("false");
             }
         });
     });
@@ -248,7 +248,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 playlistExists.then((res) => {
 
                     // No such playlist exists
-                    if (res == false) {
+                    if (res == "false") {
                         console.log("No existing playlist");
 
                         // Create playlist

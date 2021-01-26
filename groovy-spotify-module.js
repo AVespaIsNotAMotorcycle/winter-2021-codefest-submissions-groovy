@@ -104,6 +104,7 @@ exports.isPlaylistGroovy = function (playlistID) {
 
     // search all lines
     lines.forEach((line) => {
+        console.log(line);
         if (line == playlistID) {
             return true;
         }

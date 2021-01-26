@@ -32,32 +32,19 @@
     <script id="recs-template" type="text/x-handlebars-template">
       <div class="grid-container">
         <div class="grid-item imageplate">
-          <img class="profile-image" width="150" src="{{images.0.url}}" />
+          <img class="profile-image" width="150" height="150" src="{{images.0.url}}" />
         </div>
         <div class="grid-item nameplate">
           <h3>{{display_name}}</h3>
           <button class="btn btn-primary" id="get-recs">Generate New Playlist</button>
         </div>
       </div>
+      <button class="btn btn-primary" id="get-recs">Generate New Playlist</button>
+        
     </script>
 
     <script id="recs-playlist-template" type="text/x-handlebars-template">
       <iframe src={{playlist_link}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </script>
-
-    <script id="top-artists-template" type="text/x-handlebars-template">
-      <dl class="dl-horizontal">
-        <dt>Top Artists: </dt><dd>{{items.0.name}}</dd>
-        <dt></dt><dd>{{items.1.name}}</dd>
-        <dt></dt><dd>{{items.2.name}}</dd>
-        <dt></dt><dd>{{items.3.name}}</dd>
-        <dt></dt><dd>{{items.4.name}}</dd>
-        <dt></dt><dd>{{items.5.name}}</dd>
-        <dt></dt><dd>{{items.6.name}}</dd>
-        <dt></dt><dd>{{items.7.name}}</dd>
-        <dt></dt><dd>{{items.8.name}}</dd>
-        <dt></dt><dd>{{items.9.name}}</dd>
-      </dl>
     </script>
 
     <script id="user-profile-template" type="text/x-handlebars-template">

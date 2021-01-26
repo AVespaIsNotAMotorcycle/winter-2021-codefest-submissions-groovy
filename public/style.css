@@ -64,7 +64,7 @@ h1,h2 {
   display: inline-grid;
   width:fit-content; 
   height:fit-content;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: auto auto auto auto;
   grid-template-rows: 100%;
   grid-template-areas: 
     "pad imageplate nameplate pad"

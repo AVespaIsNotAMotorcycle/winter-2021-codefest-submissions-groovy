@@ -119,7 +119,7 @@ exports.isPlaylistGroovy = function (playlistID) {
 // playlistName: the name to look for
 exports.findPlaylist = async function (userID, accessToken, playlistName) {
     var options = {
-        url: 'https://api.spotify.com/v1/users/' + userID + '/playlists?limit=50',
+        url: 'https://api.spotify.com/v1/users/' + userID + '/playlists?limit=50&offset=0',
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };

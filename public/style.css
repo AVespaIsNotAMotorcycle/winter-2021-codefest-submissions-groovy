@@ -87,7 +87,7 @@ h1,h2 {
 .imageplate {
   grid-row: 1 / 1;
   grid-column: 1 / 2;
-  justify-self: end;
+  justify-self: start;
 }
 
 .nameplate {

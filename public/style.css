@@ -9,11 +9,9 @@
   width: 500px;
 }
 
-body {
-  height: 100%;
+html {
   background-image: linear-gradient(#191414, #000000);
   background-size: cover;
-  color: #fff;
 }
 
 h1,h2 {

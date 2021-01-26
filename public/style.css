@@ -101,6 +101,7 @@ h1,h2 {
 }
 
 h3 {
+  color: #ffffff;
   white-space: nowrap;
   padding-left: 27px;
 }

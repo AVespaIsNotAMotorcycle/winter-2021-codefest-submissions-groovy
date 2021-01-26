@@ -1,5 +1,5 @@
 var request = require('request'); // "Request" library
-var fs = request('fs'); //"File System" library
+var fs = require('fs'); //"File System" library
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api

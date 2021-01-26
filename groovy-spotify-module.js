@@ -136,7 +136,7 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                     console.log("Existing playlist: " + body.items[i].name + " " + body.items[i].id);
                     if (body.items[i].name == "Groovy") {
                         // check if it's made by groovy
-                        var isGroovy = isPlaylistGroovy(body.items[i].id);
+                        var isGroovy = module.exports.isPlaylistGroovy(body.items[i].id);
                         if (isGroovy) {
                             resolve(body.items[i].id);
                         }

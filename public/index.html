@@ -144,6 +144,32 @@
             recsPlaceholder.innerHTML = recsTemplate();
             console.log("Placing recs button");
 
+            document.getElementById('get-recs').addEventListener('click', ()=>{
+            console.log("Recs clicked");
+
+            $.ajax({
+              url: '/recs',
+              data: {
+                'user_id': userid
+              }
+            }).done(function(data) {
+
+              console.log(data);
+              var pl = {
+                playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
+              };
+
+              console.log(pl);
+
+              var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
+                  recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
+                  recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
+
+                  recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
+              
+            });
+          }, false);
+
             $.ajax({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
@@ -168,7 +194,7 @@
 
           console.log("Adding event listener for recs button");
           console.log(document.getElementById('get-recs'));
-          document.getElementById('get-recs').addEventListener('click', function() {
+          document.getElementById('get-recs').addEventListener('click', ()=>{
             console.log("Recs clicked");
 
             $.ajax({
@@ -192,7 +218,7 @@
                   recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
               
             });
-          }/*, false*/);
+          }, false);
           console.log(document.getElementById('get-recs'));
           console.log("Added event listener for recs button");
           

@@ -240,7 +240,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 console.log(rec_tracks);
 
                 // Check if Groovy playlist exists
-                let playlistExists = findPlaylist(userID, accessToken, 'Groovy');
+                let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');
 
                 playlistExists.then((res) => {
 

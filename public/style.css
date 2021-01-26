@@ -9,6 +9,10 @@
   width: 500px;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   background-image: linear-gradient(#191414, #000000);
   height: 100%;

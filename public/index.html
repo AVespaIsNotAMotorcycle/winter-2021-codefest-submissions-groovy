@@ -139,12 +139,7 @@
               $('#loggedin').hide();
           }
 
-          /*
-          console.log("Adding event listener for recs button");
-          console.log(document.getElementById('get-recs'));
-          document.getElementById('get-recs').addEventListener('click', ()=>{
-            console.log("Recs clicked");
-
+          document.getElementById('get-recs').addEventListener('click', function() {
             $.ajax({
               url: '/recs',
               data: {
@@ -158,18 +153,17 @@
               };
 
               console.log(pl);
-
+              //console.log(playlist_link);
+              //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
+              //playlist_embed.src = playlist_link;
               var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
                   recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
-                  recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
+              //recsPlaceholder = document.getElementById('recs');
 
-                  recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
+              recsPlaceholder.innerHTML = recsPlaylistTemplate(pl);
               
             });
           }, false);
-          console.log(document.getElementById('get-recs'));
-          console.log("Added event listener for recs button");
-          */
         }
       })();
     </script>

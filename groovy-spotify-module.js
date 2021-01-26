@@ -259,7 +259,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                             playlist_res = res;
                             
                             // Log playlist ID
-                            fs.appendFile('playlist_log.txt', playlist_res.id, (err) => {
+                            fs.appendFile('playlist_log.txt', playlist_res.id + '\n', (err) => {
                                 if (err) {
                                     throw err;
                                 }

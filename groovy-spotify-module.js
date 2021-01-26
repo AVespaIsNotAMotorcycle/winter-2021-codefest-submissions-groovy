@@ -133,6 +133,7 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
             }
             else {
                 for (var i = 0; i < body.items.length; i++) {
+                    console.log("Existing playlist: " + body.items[i].name + " " + body.items[i].id);
                     if (body.items[i].name == "Groovy") {
                         // check if it's made by groovy
                         var isGroovy = isPlaylistGroovy(body.items[i].id);
@@ -198,9 +199,9 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
           'Content-Type': 'application/json',
         }
     }
-    console.log(s_options);
+    //console.log(s_options);
     request.post(s_options, function(error, response, body) {
-        console.log(body);
+        //console.log(body);
         return body;
     });
 };
@@ -238,15 +239,18 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
             recommendations.then((res) => {
                 console.log("Got recommendations");
                 var rec_tracks = res;//JSON.parse(res);
-                console.log(rec_tracks);
+                //console.log(rec_tracks);
 
                 // Check if Groovy playlist exists
+                console.log("Checking log")
                 let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');
 
                 playlistExists.then((res) => {
 
                     // No such playlist exists
                     if (res == false) {
+                        console.log("No existing playlist");
+
                         // Create playlist
                         var playlistInfo = {
                             name: "Groovy",
@@ -280,6 +284,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     }
                     // If that playlist does exist
                     else {
+                        console.log("Existing playlists");
+
                         var plID = res;
 
                         // Populate playlist with recommendations

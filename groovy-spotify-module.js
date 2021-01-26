@@ -139,6 +139,7 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                         var isGroovy = module.exports.isPlaylistGroovy(body.items[i].id);
                         if (isGroovy) {
                             resolve(body.items[i].id);
+                            return;
                         }
                     }
                 }

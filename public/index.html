@@ -45,34 +45,6 @@
       <iframe src={{playlist_link}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </script>
 
-    <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
-      <div class="media">
-        <div class="pull-left">
-          <img class="media-object" width="150" height="150" src="{{images.0.url}}" />
-        </div>
-        <div class="media-body">
-          <dl class="dl-horizontal">
-            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-            <dt>Id</dt><dd>{{id}}</dd>
-            <dt>Email</dt><dd>{{email}}</dd>
-            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-            <dt>Country</dt><dd>{{country}}</dd>
-          </dl>
-        </div>
-      </div>
-    </script>
-
-    <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
-      <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-      </dl>
-    </script>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
@@ -91,16 +63,6 @@
           }
           return hashParams;
         }
-
-        /*
-        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
-            userProfileTemplate = Handlebars.compile(userProfileSource),
-            userProfilePlaceholder = document.getElementById('user-profile');
-
-        var oauthSource = document.getElementById('oauth-template').innerHTML,
-            oauthTemplate = Handlebars.compile(oauthSource),
-            oauthPlaceholder = document.getElementById('oauth');
-        */
 
         var recsSource = document.getElementById('recs-template').innerHTML,
             recsTemplate = Handlebars.compile(recsSource),
@@ -130,30 +92,30 @@
             console.log("Placing recs button");
 
             document.getElementById('get-recs').addEventListener('click', ()=>{
-            console.log("Recs clicked");
+              console.log("Recs clicked");
 
-            $.ajax({
-              url: '/recs',
-              data: {
-                'user_id': userid
-              }
-            }).done(function(data) {
+              $.ajax({
+                url: '/recs',
+                data: {
+                  'user_id': userid
+                }
+              }).done(function(data) {
 
-              console.log(data);
-              var pl = {
-                playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
-              };
+                console.log(data);
+                var pl = {
+                  playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
+                };
 
-              console.log(pl);
+                console.log(pl);
 
-              var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
-                  recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
-                  recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
+                var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
+                    recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
+                    recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
 
-                  recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
-              
-            });
-          }, false);
+                    recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
+                
+              });
+            }, false);
 
             $.ajax({
                 url: 'https://api.spotify.com/v1/me',
@@ -177,6 +139,7 @@
               $('#loggedin').hide();
           }
 
+          /*
           console.log("Adding event listener for recs button");
           console.log(document.getElementById('get-recs'));
           document.getElementById('get-recs').addEventListener('click', ()=>{
@@ -206,7 +169,7 @@
           }, false);
           console.log(document.getElementById('get-recs'));
           console.log("Added event listener for recs button");
-          
+          */
         }
       })();
     </script>

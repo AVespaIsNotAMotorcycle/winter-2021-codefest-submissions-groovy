@@ -18,8 +18,14 @@
             <h1>small artists you will like</h1>
           </div>
           <div id="rec-button-div">
-            <div id="recs">
-            </div>
+            <div class="grid-container">
+              <div class="grid-item imageplate" id="profile-pic">
+              </div>
+              <div class="grid-item nameplate">
+                <div id="nametag"></div>
+                <button class="btn btn-primary" id="get-recs">Generate New Playlist</button>
+              </div>
+            </div>   
           </div>
           <div id="rec-playlist-div">
             <div id="playlist-embed-location">
@@ -29,16 +35,12 @@
       </div>
     </div>
 
-    <script id="recs-template" type="text/x-handlebars-template">
-      <div class="grid-container">
-        <div class="grid-item imageplate">
-          <img class="profile-image" width="150" height="150" src="{{images.0.url}}" />
-        </div>
-        <div class="grid-item nameplate">
-          <h3>Logged in as {{display_name}}</h3>
-          <button class="btn btn-primary" id="get-recs">Generate New Playlist</button>
-        </div>
-      </div>     
+    <script id="nametag-template" type="text/x-handlebars-template">
+      <h3>Logged in as {{display_name}}</h3>
+    </script>
+
+    <script id="profile-pic-template" type="text/x-handlebars-template">
+      <img class="profile-image" width="150" height="150" src="{{images.0.url}}" />
     </script>
 
     <script id="recs-playlist-template" type="text/x-handlebars-template">
@@ -64,9 +66,17 @@
           return hashParams;
         }
 
-        var recsSource = document.getElementById('recs-template').innerHTML,
-            recsTemplate = Handlebars.compile(recsSource),
-            recsPlaceholder = document.getElementById('recs');
+        var pfpSource = document.getElementById('profile-pic-template').innerHTML,
+            pfpTemplate = Handlebars.compile(pfpSource),
+            pfpPlaceholder = document.getElementById('profile-pic');
+
+        var nametagSource = document.getElementById('nametag-template').innerHTML,
+          nametagTemplate = Handlebars.compile(pfpSource),
+          nametagPlaceholder = document.getElementById('nametag');
+
+        //var recsSource = document.getElementById('recs-template').innerHTML,
+            //recsTemplate = Handlebars.compile(recsSource),
+            //recsPlaceholder = document.getElementById('recs');
 
         var params = getHashParams();
 
@@ -81,14 +91,8 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
-            /*
-            // render oauth info
-            oauthPlaceholder.innerHTML = oauthTemplate({
-              access_token: access_token,
-              refresh_token: refresh_token
-            });
-            */
-            recsPlaceholder.innerHTML = recsTemplate();
+
+            //recsPlaceholder.innerHTML = recsTemplate();
             console.log("Placing recs button");
 
             $.ajax({
@@ -97,7 +101,11 @@
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
-                  recsPlaceholder.innerHTML = recsTemplate(response);
+                  pfpPlaceholder.innerHTML = pfpTemplate(response);
+                  nametagPlaceholder.innerHTML = nametagTemplate(response);
+
+
+                  //recsPlaceholder.innerHTML = recsTemplate(response);
 
                   userid = response.id;
 
@@ -105,8 +113,15 @@
                   $('#loggedin').show();
                 }
             });
+          } else {
+              // render initial screen
+              $('#login').show();
+              $('#loggedin').hide();
+          }
+          
+        }
 
-            document.getElementById('get-recs').addEventListener('click', function() {
+        document.getElementById('get-recs').addEventListener('click', function() {
               console.log("Recs clicked");
 
               $.ajax({
@@ -131,40 +146,7 @@
                 
               });
             }, false);
-          } /*else if (playlist) {
-              recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
-          } */else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
-          }
 
-          document.getElementById('get-recs').addEventListener('click', function() {
-            $.ajax({
-              url: '/recs',
-              data: {
-                'user_id': userid
-              }
-            }).done(function(data) {
-
-              console.log(data);
-              var pl = {
-                playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
-              };
-
-              console.log(pl);
-              //console.log(playlist_link);
-              //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
-              //playlist_embed.src = playlist_link;
-              var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
-                  recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
-              //recsPlaceholder = document.getElementById('recs');
-
-              recsPlaceholder.innerHTML = recsPlaylistTemplate(pl);
-              
-            });
-          }, false);
-        }
       })();
     </script>
   </body>

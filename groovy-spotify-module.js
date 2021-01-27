@@ -189,7 +189,8 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     var tracksList = tracks[0];
     if (tracks.length > 1) {
         for (var i = 1; i < tracks.length; i++) {
-            tracksList += "," + tracks[i];
+            if (tracks[i].isUnderground)
+              tracksList += "," + tracks[i];
         }
     }
     s_options = {
@@ -207,6 +208,90 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     });
 };
 
+// Returns true if song's artist has below a certain number of followers
+// songURI: URI of the song to check
+// followerThreshold: integer maximum number of followers
+exports.isUnderground = function (songURI, followerThreshold, accessToken) {
+  var track = module.exports.getTrack(songURI, accessToken);
+  track.then((res) => {
+    var track_body = JSON.parse(res);
+    return track_body.artists[0].id;
+  })
+  .then((artist_id) => {
+      var track_artist = module.exports.getArtist(artist_id, accessToken);
+      track_artist.then((res) => {
+        var artist_body = JSON.parse(res);
+        return artist_body.popularity < 40;
+      })
+  })
+};
+
+// Fetches catalog information of a track
+// trackID: unique URI of a track
+// accessToken: security token allowing access to the web api
+exports.getTrack = async function (trackID, accessToken){
+  var track_options = {
+      url: 'https://api.spotify.com/v1/tracks/' + trackID,
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+        request.get(track_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
+    });
+};
+
+// Fetches catalog information of an artist
+// artistID: unique URI of an artist
+// accessToken: security token allowing access to the web api
+exports.getArtist = async function (artistID, accessToken){
+  var artist_options = {
+      url: 'https://api.spotify.com/v1/artists/' + artistID,
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+        request.get(track_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
+    });
+};
+
+// Fetches the top tracks of a user
+// accessToken: security token allowing access to the web api
+exports.getTopTracks = async function (userID, accessToken) {
+    var top_tracks_options = {
+        url: 'https://api.spotify.com/v1/me/top/tracks',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken
+        }
+    }
+    return new Promise((resolve, reject) => {
+        request.get(top_tracks_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
+    });
+};
 // When called, creates and populates playlist based on recommendations
 // userID: the spotify id of the user for whom the playlist is being made
 // accessToken: security token allowing access to the web api

@@ -1,12 +1,13 @@
 {
-  "author": "Spotify",
-  "name": "web-api-auth-examples",
-  "description": "Basic examples of the Spotify authorization flows through OAuth 2",
+  "author": "Team Groovy",
+  "name": "groovy-recommendation",
+  "description": "Recommends songs from lesser known artists based on top tracks on Spotify. Built of the example OAuth code from Spotify.",
   "version": "0.0.2",
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.4",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
     "querystring": "~0.2.0",
     "request": "~2.83.0",
     "spotify-web-api-js": "^0.22.1",

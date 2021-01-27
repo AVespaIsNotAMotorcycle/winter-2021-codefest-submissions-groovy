@@ -9,71 +9,44 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Small artists you will like</h1>
+        <h1>small artists you will like</h1>
         <a id="login-button" href="/login" class="btn btn-primary">Log in with Spotify</a>
       </div>
       <div id="loggedin">
-        <div id="user-profile">
-        </div>
-        <div id="oauth">
-        </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
-        <div id="recs">
+        <div>
+          <div id="grid-header">
+            <h1>small artists you will like</h1>
+          </div>
+          <div id="rec-button-div">
+            <div class="grid-container">
+              <div class="grid-item imageplate" id="profile-pic">
+              </div>
+              <div class="grid-item nameplate">
+                <div id="nametag"></div>
+                <button class="btn btn-primary" id="get-recs">Generate New Playlist</button>
+              </div>
+            </div>   
+          </div>
+          <div id="rec-playlist-div">
+            <div id="playlist-embed-location">
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script id="recs-template" type="text/x-handlebars-template">
-      <h1>Get Recommendations</h1>
-      <button class="btn btn-primary" id="get-recs">Obtain Recommendations</button>
-      <div id="top-artists"></div>
+    <script id="nametag-template" type="text/x-handlebars-template">
+      <h3>Logged in as {{display_name}}</h3>
+    </script>
+
+    <script id="profile-pic-template" type="text/x-handlebars-template">
+      <img class="profile-image" width="150" height="150" src="{{images.0.url}}" />
     </script>
 
     <script id="recs-playlist-template" type="text/x-handlebars-template">
-      <iframe src={{playlist_link}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </script>
-
-    <script id="top-artists-template" type="text/x-handlebars-template">
-      <dl class="dl-horizontal">
-        <dt>Top Artists: </dt><dd>{{items.0.name}}</dd>
-        <dt></dt><dd>{{items.1.name}}</dd>
-        <dt></dt><dd>{{items.2.name}}</dd>
-        <dt></dt><dd>{{items.3.name}}</dd>
-        <dt></dt><dd>{{items.4.name}}</dd>
-        <dt></dt><dd>{{items.5.name}}</dd>
-        <dt></dt><dd>{{items.6.name}}</dd>
-        <dt></dt><dd>{{items.7.name}}</dd>
-        <dt></dt><dd>{{items.8.name}}</dd>
-        <dt></dt><dd>{{items.9.name}}</dd>
-      </dl>
-    </script>
-
-    <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
-      <div class="media">
-        <div class="pull-left">
-          <img class="media-object" width="150" src="{{images.0.url}}" />
-        </div>
-        <div class="media-body">
-          <dl class="dl-horizontal">
-            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-            <dt>Id</dt><dd>{{id}}</dd>
-            <dt>Email</dt><dd>{{email}}</dd>
-            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-            <dt>Country</dt><dd>{{country}}</dd>
-          </dl>
-        </div>
+      <div style="border-radius: 10px; width: 50%; height:400px; overflow: hidden; margin-top: 25px; margin-left: 25%;">
+        <iframe src={{playlist_link}} width="100%" height="400px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
       </div>
-    </script>
-
-    <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
-      <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-      </dl>
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
@@ -95,17 +68,17 @@
           return hashParams;
         }
 
-        var userProfileSource = document.getElementById('user-profile-template').innerHTML,
-            userProfileTemplate = Handlebars.compile(userProfileSource),
-            userProfilePlaceholder = document.getElementById('user-profile');
+        var pfpSource = document.getElementById('profile-pic-template').innerHTML,
+            pfpTemplate = Handlebars.compile(pfpSource),
+            pfpPlaceholder = document.getElementById('profile-pic');
 
-        var oauthSource = document.getElementById('oauth-template').innerHTML,
-            oauthTemplate = Handlebars.compile(oauthSource),
-            oauthPlaceholder = document.getElementById('oauth');
+        var nametagSource = document.getElementById('nametag-template').innerHTML,
+          nametagTemplate = Handlebars.compile(nametagSource),
+          nametagPlaceholder = document.getElementById('nametag');
 
-        var recsSource = document.getElementById('recs-template').innerHTML,
-            recsTemplate = Handlebars.compile(recsSource),
-            recsPlaceholder = document.getElementById('recs');
+        //var recsSource = document.getElementById('recs-template').innerHTML,
+            //recsTemplate = Handlebars.compile(recsSource),
+            //recsPlaceholder = document.getElementById('recs');
 
         var params = getHashParams();
 
@@ -120,13 +93,9 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
-            // render oauth info
-            oauthPlaceholder.innerHTML = oauthTemplate({
-              access_token: access_token,
-              refresh_token: refresh_token
-            });
 
-            recsPlaceholder.innerHTML = recsTemplate();
+            //recsPlaceholder.innerHTML = recsTemplate();
+            console.log("Placing recs button");
 
             $.ajax({
                 url: 'https://api.spotify.com/v1/me',
@@ -134,7 +103,11 @@
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
+                  pfpPlaceholder.innerHTML = pfpTemplate(response);
+                  nametagPlaceholder.innerHTML = nametagTemplate(response);
+
+
+                  //recsPlaceholder.innerHTML = recsTemplate(response);
 
                   userid = response.id;
 
@@ -142,55 +115,40 @@
                   $('#loggedin').show();
                 }
             });
-          } /*else if (playlist) {
-              recsPlaceholder.innerHTML = document.getElementById('recs-playlist-template').innerHTML;
-          } */else {
+          } else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();
           }
-
-          document.getElementById('get-recs').addEventListener('click', function() {
-            $.ajax({
-              url: '/recs',
-              data: {
-                'user_id': userid
-              }
-            }).done(function(data) {
-
-              console.log(data);
-              var pl = {
-                playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
-              };
-
-              console.log(pl);
-              //console.log(playlist_link);
-              //var playlist_embed = <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>;
-              //playlist_embed.src = playlist_link;
-              var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
-                  recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
-              //recsPlaceholder = document.getElementById('recs');
-
-              recsPlaceholder.innerHTML = recsPlaylistTemplate(pl);
-              
-            });
-          }, false);
-
-          document.getElementById('obtain-new-token').addEventListener('click', function() {
-            $.ajax({
-              url: '/refresh_token',
-              data: {
-                'refresh_token': refresh_token
-              }
-            }).done(function(data) {
-              access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });
-            });
-          }, false);
+          
         }
+
+        document.getElementById('get-recs').addEventListener('click', function() {
+              console.log("Recs clicked");
+
+              $.ajax({
+                url: '/recs',
+                data: {
+                  'user_id': userid
+                }
+              }).done(function(data) {
+
+                console.log(data);
+                var pl = {
+                  playlist_link: "https://open.spotify.com/embed/playlist/" + data.playlist
+                };
+
+                console.log(pl);
+
+                var recsPlaylistSource = document.getElementById('recs-playlist-template').innerHTML,
+                    recsPlaylistTemplate = Handlebars.compile(recsPlaylistSource);
+                    recsPlaylistPlaceholder = document.getElementById('playlist-embed-location');
+
+                    recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
+                
+              });
+            }, false);
+
       })();
     </script>
   </body>

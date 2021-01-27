@@ -9,9 +9,13 @@
   width: 500px;
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  background: #191414;
-  color: #fff;
+  background-image: linear-gradient(#191414, #000000);
+  height: 100%;
 }
 
 h1,h2 {
@@ -21,20 +25,82 @@ h1,h2 {
 }
 
 .btn-primary,.btn-primary:active,.btn-primary:focus {
-  color: #fff;
-  background-color: #141919;
+  color: #191414;
+  background-color: #1DB954;
   border-color: #1DB954;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  margin-bottom: 25px;
+  padding-bottom: 50px;
+
+  /*background:transparent;*/
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  /*margin: 18px;*/
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  display:inline-block;
+  outline:none;
+  position:relative;
+  top:0;
+  /*text-shadow:0 1px 1px rgba(0, 0, 0, 0.5);
+  /*-webkit-transition: all 0.2s ease-in-out 0s;
+  -moz-transition: all 0.2s ease-in-out 0s;
+  -ms-transition: all 0.2s ease-in-out 0s;*/
+  transition: all 0.2s ease-in-out 0s;
+
+  border-radius:20em; 
 }
 
 .btn-primary:hover {
   color: #191414;
-  background-color: #1DB954;
-  border-color: #1DB954;
+  background-color: #20c75a;
+  border-color: #20c75a;
 }
 
 .container,#login-button{
   text-align: center;
+}
+
+.grid-container {
+  display: inline-grid;
+  width: 50%; 
+  height:fit-content;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: 100%;
+  grid-template-areas: 
+    "pad imageplate nameplate pad"
+}
+
+.grid-item {
+  width: 100%;
+}
+
+.grid-line{
+  border: 1px solid black;
+  height: 999px;
+}
+
+.profile-image {
+  border-radius: 50%;
+  text-align: left;  
+}
+
+.imageplate {
+  grid-row: 1 / 1;
+  grid-column: 1 / 2;
+  justify-self: start;
+}
+
+.nameplate {
+  grid-row: 1 / 1;
+  grid-column: 3 / 4;
+  /*justify-self: start;*/
+}
+
+h3 {
+  color: #ffffff;
+  white-space: nowrap;
 }

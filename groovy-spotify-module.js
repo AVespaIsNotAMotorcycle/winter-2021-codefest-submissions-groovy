@@ -1,4 +1,5 @@
 var request = require('request'); // "Request" library
+var fs = require('fs'); //"File System" library
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
@@ -92,6 +93,62 @@ exports.getRecommendations = async function (seeds, accessToken) {
     });
 };
 
+// Checks if a playlist ID is in the list of Groovy playlists
+// playlistID : the id of the playlist
+exports.isPlaylistGroovy = function (playlistID) {
+    // read contents of the file
+    const data = fs.readFileSync('playlist_log.txt', 'UTF-8');
+
+    // split the contents by new line
+    const lines = data.split(/\r?\n/);
+
+    // search all lines
+    lines.forEach((line) => {
+        console.log(line);
+        if (line == playlistID) {
+            return true;
+        }
+    });
+
+    return false;
+}
+
+// Checks if a user has a playlist with a given name
+// userID: the spotify id of the user for whom the playlist is being made
+// accessToken: security token allowing access to the web api
+// playlistName: the name to look for
+exports.findPlaylist = async function (userID, accessToken, playlistName) {
+    var options = {
+        url: 'https://api.spotify.com/v1/users/' + userID + '/playlists?limit=50&offset=0',
+        headers: { 'Authorization': 'Bearer ' + accessToken },
+        json: true
+    };
+    return new Promise((resolve, reject) => {
+        request.get(options, function(error, response, body) {
+            if (error) {
+                console.log(error);
+                console.log(response);
+                console.log(body);
+                reject(response.statusCode);
+            }
+            else {
+                for (var i = 0; i < body.items.length; i++) {
+                    console.log("Existing playlist: " + body.items[i].name + " " + body.items[i].id);
+                    if (body.items[i].name == "Groovy") {
+                        // check if it's made by groovy
+                        var isGroovy = module.exports.isPlaylistGroovy(body.items[i].id);
+                        if (isGroovy) {
+                            resolve(body.items[i].id);
+                            return;
+                        }
+                    }
+                }
+                resolve("false");
+            }
+        });
+    });
+};
+
 // Creates a playlist for a user
 // userID: the spotify id of the user for whom the playlist is being made
 // accessToken: security token allowing access to the web api
@@ -143,9 +200,9 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
           'Content-Type': 'application/json',
         }
     }
-    console.log(s_options);
+    //console.log(s_options);
     request.post(s_options, function(error, response, body) {
-        console.log(body);
+        //console.log(body);
         return body;
     });
 };
@@ -183,30 +240,67 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
             recommendations.then((res) => {
                 console.log("Got recommendations");
                 var rec_tracks = res;//JSON.parse(res);
-                console.log(rec_tracks);
+                //console.log(rec_tracks);
 
-                // Create playlist
-                var playlistInfo = {
-                    name: "New Playlist",
-                    description: "New playlist description",
-                    public: false
-                };
-                let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+                // Check if Groovy playlist exists
+                console.log("Checking log")
+                let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');
 
-                playlist.then((res) => {
-                    console.log("Created playlist");
-                    playlist_res = res;
+                playlistExists.then((res) => {
 
-                    // Populate playlist with recommendations
-                    var rec_s = [];
-                    for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                        rec_s.push(rec_tracks.tracks[i].uri)
+                    // No such playlist exists
+                    if (res == "false") {
+                        console.log("No existing playlist");
+
+                        // Create playlist
+                        var playlistInfo = {
+                            name: "Groovy",
+                            description: "",
+                            public: false
+                        };
+                        let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+
+                        playlist.then((res) => {
+                            console.log("Created playlist");
+                            playlist_res = res;
+                            
+                            // Log playlist ID
+                            fs.appendFile('playlist_log.txt', playlist_res.id + '\n', (err) => {
+                                if (err) {
+                                    throw err;
+                                }
+                                console.log("Log is updated.");
+                            });
+
+                            // Populate playlist with recommendations
+                            var rec_s = [];
+                            for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                                rec_s.push(rec_tracks.tracks[i].uri)
+                            }
+                            module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+
+                            resolve(playlist_res.id);
+
+                        });
                     }
-                    module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+                    // If that playlist does exist
+                    else {
+                        console.log("Existing playlists");
 
-                    resolve(playlist_res.id);
+                        var plID = res;
+
+                        // Populate playlist with recommendations
+                        var rec_s = [];
+                        for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                            rec_s.push(rec_tracks.tracks[i].uri)
+                        }
+                        module.exports.addToPlaylist(plID, rec_s, accessToken);
+
+                        resolve(plID);
+                    }
 
                 });
+
             });
 
         });

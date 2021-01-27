@@ -47,7 +47,7 @@ exports.getTopTracks = async function (userID, accessToken) {
 // seeds: JSON object of the form
 //      seeds = {
 //          seed_artists: $artist_id_one$, $artist_id_two$, etc
-//          seed_genres:  $genre_name_one$, $genre_name_two$, etc 
+//          seed_genres:  $genre_name_one$, $genre_name_two$, etc
 //          seed_tracks:  $track_id_one$, $track_id_two$, etc
 //      }
 //      with up to 5 total objects split across those three categories
@@ -73,7 +73,7 @@ exports.getRecommendations = async function (seeds, accessToken) {
         //console.log(seeds.seed_tracks);
         append += "seed_tracks=" + seeds.seed_tracks;
     }
-    
+
     var options = {
         url: 'https://api.spotify.com/v1/recommendations?' + append,
         headers: { 'Authorization': 'Bearer ' + accessToken },

@@ -302,7 +302,7 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
         // Get tracks in the playlist
         let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
         playlistTracks.then((res) => {
-            console.log(res);
+            console.log(res.tracks);
 
             // Make array of URIs
             console.log("CREATING ARRAY OF TRACKS");

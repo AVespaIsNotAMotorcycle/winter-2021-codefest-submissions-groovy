@@ -231,7 +231,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     }
     //console.log(s_options);
     request.post(s_options, function(error, response, body) {
-        //console.log(body);
+        console.log(body);
         return body;
     });
 };

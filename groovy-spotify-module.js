@@ -186,7 +186,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 exports.isUnderground = function (songURI, followerThreshold, accessToken) {
     console.log(songURI);
     console.log(songURI.substring(14,36));
-    var track = module.exports.getTrack(songURI.substring(13,22), accessToken);
+    var track = module.exports.getTrack(songURI.substring(13,36), accessToken);
     track.then((res) => {
       var track_body = JSON.parse(res);
       console.log(track_body);

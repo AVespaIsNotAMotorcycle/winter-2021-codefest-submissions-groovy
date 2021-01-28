@@ -103,13 +103,14 @@ exports.isPlaylistGroovy = function (playlistID) {
     const lines = data.split('\n');
 
     // search all lines
-    lines.forEach((line) => {
+    var test = lines.forEach((line) => {
         console.log(line.length + " : " + playlistID.length + " || " + line);
         if (line == playlistID) {
             console.log("MATCH");
             return true;
         }
     });
+    console.log("test: " + test);
 
     return false;
 }

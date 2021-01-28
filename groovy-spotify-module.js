@@ -210,7 +210,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     console.log("CHECKING SONG ARTIST LISTERNER COUNT");
     var tracksList;
     for (var i = 0; i < tracks.length; i++) {
-        let isUnder = module.exports.isUnderground(tracks[i], 15000, accessToken));
+        let isUnder = module.exports.isUnderground(tracks[i], 15000, accessToken);
         isUnder.then((res) => {
             if (res) {
                 console.log("TRACK IS UNDERGROUND");

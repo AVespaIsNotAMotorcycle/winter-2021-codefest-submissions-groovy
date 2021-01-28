@@ -214,6 +214,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
         isUnder.then((res) => {
             if (res) {
                 console.log("TRACK IS UNDERGROUND");
+                tracksList += tracks[i];
             }
             else {
                 console.log("TRACK NOT UNDERGROUND");

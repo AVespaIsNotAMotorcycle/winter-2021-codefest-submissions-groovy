@@ -187,7 +187,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     var tracksList;
     for (var i = 0; i < tracks.length; i++) {
-        if (module.exports.isUnderground(tracks[i].uri, 15000, accessToken)) {
+        if (module.exports.isUnderground(tracks[i], 15000, accessToken)) {
             console.log("Track is underground");
         }
     }

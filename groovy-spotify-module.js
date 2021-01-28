@@ -287,6 +287,7 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
         }
         var cur_tracks; 
         request.get(cur_track_options, function(error, response, body) {
+            console.log(response);
             cur_tracks = JSON.parse(body);
         });
         console.log("RESPONSE:");

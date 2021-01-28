@@ -1,6 +1,5 @@
 var request = require('request'); // "Request" library
 var fs = require('fs'); //"File System" library
-const { del } = require('request');
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
@@ -221,7 +220,7 @@ exports.isUnderground = function (songURI, followerThreshold, accessToken) {
       var track_artist = module.exports.getArtist(artist_id, accessToken);
       track_artist.then((res) => {
         var artist_body = JSON.parse(res);
-        return artist_body.popularity < 40;
+        return artist_body.followers.total < followerThreshold;
       })
   })
 };
@@ -274,7 +273,7 @@ exports.getArtist = async function (artistID, accessToken){
 
 // Finds and returns a playlist object based on a given ID
 // accessToken: security token allowing access to the web api
-// playlistID
+// playlistID: Spotify ID of the playlist to be fetched
 exports.getPlaylist = async function (accessToken, playlistID) {
     var cur_track_options = {
         url: 'https://api.spotify.com/v1/playlists/' + playlistID,
@@ -296,7 +295,7 @@ exports.getPlaylist = async function (accessToken, playlistID) {
 
 // Deletes all songs in a playlist
 // accessToken: security token allowing access to the web api
-// playlistID
+// playlistID: Spotify ID of the playlist to be cleared
 exports.clearPlaylist = async function (accessToken, playlistID) {
     return new Promise((resolve, reject) => {
         // Get tracks in the playlist

@@ -110,19 +110,6 @@ exports.isPlaylistGroovy = function (playlistID) {
         }
     }
     return false;
-
-    /*
-    // search all lines
-    var test = lines.forEach((line) => {
-        console.log(line.length + " : " + playlistID.length + " || " + line);
-        if (line == playlistID) {
-            console.log("MATCH");
-            return true;
-        }
-    });
-    console.log("test: " + test);
-
-    return false; */
 }
 
 // Checks if a user has a playlist with a given name
@@ -149,14 +136,9 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                     if (body.items[i].name == playlistName) {
                         // check if it's made by groovy
                         var isGroovy = module.exports.isPlaylistGroovy(body.items[i].id);
-                        console.log("isGroovy: " + isGroovy);
                         if (isGroovy) {
-                            console.log("found match");
                             resolve(body.items[i].id);
                             return;
-                        }
-                        else {
-                            console.log("no match");
                         }
                     }
                 }

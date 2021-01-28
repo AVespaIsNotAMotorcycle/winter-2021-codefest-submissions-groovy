@@ -1,5 +1,6 @@
 var request = require('request'); // "Request" library
 var fs = require('fs'); //"File System" library
+const { resolve } = require('path');
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
@@ -183,19 +184,21 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // Returns true if song's artist has below a certain number of followers
 // songURI: URI of the song to check
 // followerThreshold: integer maximum number of followers
-exports.isUnderground = function (songURI, followerThreshold, accessToken) {
-    var track = module.exports.getTrack(songURI.substring(14,36), accessToken);
-    track.then((res) => {
-      var track_body = JSON.parse(res);
-      return track_body.artists[0].id;
-    })
-    .then((artist_id) => {
-        var track_artist = module.exports.getArtist(artist_id, accessToken);
-        track_artist.then((res) => {
-          var artist_body = JSON.parse(res);
-          return artist_body.followers.total < followerThreshold;
+exports.isUnderground = async function (songURI, followerThreshold, accessToken) {
+    return new Promise((resolve, reject) => {
+        var track = module.exports.getTrack(songURI.substring(14,36), accessToken);
+        track.then((res) => {
+          var track_body = JSON.parse(res);
+          return track_body.artists[0].id;
         })
-    })
+        .then((artist_id) => {
+            var track_artist = module.exports.getArtist(artist_id, accessToken);
+            track_artist.then((res) => {
+              var artist_body = JSON.parse(res);
+              resolve (artist_body.followers.total < followerThreshold);
+            })
+        })
+    });
   };
 
 // Populates a playlist with tracks
@@ -203,11 +206,19 @@ exports.isUnderground = function (songURI, followerThreshold, accessToken) {
 // tracks: array of track URIs
 // accessToken: security token allowing access to the web api
 exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
+    console.log("ADDING TRACKS TO PLAYLIST");
+    console.log("CHECKING SONG ARTIST LISTERNER COUNT");
     var tracksList;
     for (var i = 0; i < tracks.length; i++) {
-        if (module.exports.isUnderground(tracks[i], 15000, accessToken)) {
-            console.log("Track is underground");
-        }
+        let isUnder = module.exports.isUnderground(tracks[i], 15000, accessToken));
+        isUnder.then((res) => {
+            if (res) {
+                console.log("TRACK IS UNDERGROUND");
+            }
+            else {
+                console.log("TRACK NOT UNDERGROUND");
+            }
+        });
     }
     s_options = {
         url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?'

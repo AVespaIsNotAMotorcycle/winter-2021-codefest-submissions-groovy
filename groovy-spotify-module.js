@@ -294,10 +294,12 @@ exports.getPlaylist = async function (accessToken, playlistID) {
 // accessToken: security token allowing access to the web api
 // playlistID: Spotify ID of the playlist to be cleared
 exports.clearPlaylist = async function (accessToken, playlistID) {
+    console.log("CLEARING PLAYLIST OF TRACKS");
     return new Promise((resolve, reject) => {
         // Get tracks in the playlist
         let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
         playlistTracks.then((res) => {
+            console.log("CURRENT TRACKS ON PLAYLIST:");
             console.log(res.tracks);
 
             // Make array of URIs

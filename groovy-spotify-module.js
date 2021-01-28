@@ -323,7 +323,7 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
                 headers: {
                 'Authorization': 'Bearer ' + accessToken
                 },
-                data: del_tracks
+                body: del_tracks
             }
             request.delete(clear_options, function(error, response, body) {
                 if (error) {

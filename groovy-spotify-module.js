@@ -185,8 +185,8 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // followerThreshold: integer maximum number of followers
 exports.isUnderground = function (songURI, followerThreshold, accessToken) {
     console.log(songURI);
-    console.log(songURI.substring(14,36));
-    var track = module.exports.getTrack(songURI.substring(13,36), accessToken);
+    console.log(songURI.substring(14,35));
+    var track = module.exports.getTrack(songURI.substring(13,35), accessToken);
     track.then((res) => {
       var track_body = JSON.parse(res);
       console.log(track_body);

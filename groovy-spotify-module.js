@@ -247,18 +247,17 @@ exports.getTrack = async function (trackID, accessToken){
 };
 
 // Fetches catalog information of an artist
-// artistID: unique URI of an artist
+// artistID: unique ID of an artist
 // accessToken: security token allowing access to the web api
 exports.getArtist = async function (artistID, accessToken){
-  var artist_options = {
+    var artist_options = {
       url: 'https://api.spotify.com/v1/artists/' + artistID,
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
     }
-
     return new Promise((resolve, reject) => {
-        request.get(track_options, function(error, response, body) {
+        request.get(artist_options, function(error, response, body) {
             if (error) {
                 reject(response.statusCode);
             }

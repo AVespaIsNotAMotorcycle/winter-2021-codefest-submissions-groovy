@@ -1,5 +1,6 @@
 var request = require('request'); // "Request" library
 var fs = require('fs'); //"File System" library
+const { del } = require('request');
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
@@ -271,26 +272,60 @@ exports.getArtist = async function (artistID, accessToken){
     });
 };
 
-// Fetches the top tracks of a user
+// Deletes all songs in a playlist
 // accessToken: security token allowing access to the web api
-exports.getTopTracks = async function (userID, accessToken) {
-    var top_tracks_options = {
-        url: 'https://api.spotify.com/v1/me/top/tracks',
-        headers: {
-          'Authorization': 'Bearer ' + accessToken
-        }
-    }
+// playlistID
+exports.clearPlaylist = async function (accessToken, playlistID) {
     return new Promise((resolve, reject) => {
-        request.get(top_tracks_options, function(error, response, body) {
+        // Get tracks in the playlist
+        console.log("OBTAINING EXISTING TRACKS");
+        var cur_track_options = {
+            url: 'https://api.spotify.com/v1/playlists/' + playlistID,
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
+        var cur_tracks; 
+        request.get(cur_track_options, function(error, response, body) {
+            cur_tracks = JSON.parse(body);
+        });
+        console.log("RESPONSE:");
+        console.log(cur_tracks);
+
+        // Make array of URIs
+        console.log("CREATING ARRAY OF TRACKS");
+        var del_tracks = '{"tracks":[';
+        for (var i = 0; i < cur_tracks.items.length; i++) {
+            if (i > 0) {
+                del_tracks += ',';
+            }
+            del_tracks += '"uri":"' + cur_tracks.items[i].uri + '"}';
+        }
+        del_tracks += ']}';
+        console.log(del_tracks);
+
+        // Send DELETE request
+        console.log("SENDING DELETE REQUEST");
+        var clear_options = {
+            url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks',
+            headers: {
+            'Authorization': 'Bearer ' + accessToken
+            },
+            data: del_tracks
+        }
+        request.delete(clear_options, function(error, response, body) {
             if (error) {
+                console.log(response.statusCode);
                 reject(response.statusCode);
             }
             else {
+                console.log(body);
                 resolve(body);
             }
         });
     });
 };
+
 // When called, creates and populates playlist based on recommendations
 // userID: the spotify id of the user for whom the playlist is being made
 // accessToken: security token allowing access to the web api
@@ -369,9 +404,12 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     }
                     // If that playlist does exist
                     else {
-                        console.log("Updating existing playlists");
+                        console.log("Updating Existing playlists");
 
                         var plID = res;
+
+                        // Clear playlist
+                        module.exports.clearPlaylist(accessToken, plID);
 
                         // Populate playlist with recommendations
                         var rec_s = [];

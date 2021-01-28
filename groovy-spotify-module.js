@@ -185,11 +185,10 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // tracks: array of track URIs
 // accessToken: security token allowing access to the web api
 exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
-    var tracksList = tracks[0];
-    if (tracks.length > 1) {
-        for (var i = 1; i < tracks.length; i++) {
-            if (tracks[i].isUnderground)
-              tracksList += "," + tracks[i];
+    var tracksList;
+    for (var i = 0; i < tracks.length; i++) {
+        if (module.exports.isUnderground(tracks[i].uri, 15000, accessToken)) {
+            console.log("Track is underground");
         }
     }
     s_options = {

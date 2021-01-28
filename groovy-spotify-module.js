@@ -187,6 +187,7 @@ exports.isUnderground = function (songURI, followerThreshold, accessToken) {
     var track = module.exports.getTrack(songURI, accessToken);
     track.then((res) => {
       var track_body = JSON.parse(res);
+      console.log(track_body);
       return track_body.artists[0].id;
     })
     .then((artist_id) => {

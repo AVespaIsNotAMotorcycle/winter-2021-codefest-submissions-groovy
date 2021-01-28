@@ -184,11 +184,9 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // songURI: URI of the song to check
 // followerThreshold: integer maximum number of followers
 exports.isUnderground = function (songURI, followerThreshold, accessToken) {
-    //console.log(songURI.substring(14,36));
     var track = module.exports.getTrack(songURI.substring(14,36), accessToken);
     track.then((res) => {
       var track_body = JSON.parse(res);
-      //console.log(track_body);
       return track_body.artists[0].id;
     })
     .then((artist_id) => {
@@ -230,17 +228,14 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
 // trackID: unique URI of a track
 // accessToken: security token allowing access to the web api
 exports.getTrack = async function (trackID, accessToken){
-    console.log("Getting track, ID: " + trackID);
     var track_options = {
       url: 'https://api.spotify.com/v1/tracks/' + trackID,
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
     }
-
     return new Promise((resolve, reject) => {
         request.get(track_options, function(error, response, body) {
-            console.log(body);
             if (error) {
                 reject(response.statusCode);
             }

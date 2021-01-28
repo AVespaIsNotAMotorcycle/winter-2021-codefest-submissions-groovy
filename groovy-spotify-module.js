@@ -233,7 +233,7 @@ exports.getTrack = async function (trackID, accessToken){
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
-    }
+    };
     return new Promise((resolve, reject) => {
         request.get(track_options, function(error, response, body) {
             if (error) {

@@ -195,7 +195,12 @@ exports.isUnderground = async function (songURI, followerThreshold, accessToken)
             var track_artist = module.exports.getArtist(artist_id, accessToken);
             track_artist.then((res) => {
               var artist_body = JSON.parse(res);
-              resolve (artist_body.followers.total < followerThreshold);
+              if (artist_body.followers.total < followerThreshold) {
+                  resolve (songURI);
+              }
+              else {
+                  resolve(false);
+              }
             })
         })
     });
@@ -215,7 +220,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
                 console.log("TRACK IS UNDERGROUND");
                 s_options = {
                     url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?'
-                      + 'uris=' + tracks[i],
+                      + 'uris=' + res,
                     headers: {
                       'Authorization': 'Bearer ' + accessToken,
                       'Content-Type': 'application/json',

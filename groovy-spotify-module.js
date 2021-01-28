@@ -369,7 +369,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     }
                     // If that playlist does exist
                     else {
-                        console.log("Existing playlists");
+                        console.log("Updating existing playlists");
 
                         var plID = res;
 

@@ -216,7 +216,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
     for (var i = 0; i < tracks.length; i++) {
         let isUnder = module.exports.isUnderground(tracks[i], 15000, accessToken);
         isUnder.then((res) => {
-            if (res) {
+            if (res != false) {
                 console.log("TRACK IS UNDERGROUND");
                 s_options = {
                     url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?'

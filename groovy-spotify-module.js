@@ -288,7 +288,7 @@ exports.getPlaylist = async function (accessToken, playlistID) {
                 reject(response.statusCode);
             }
             else {
-                resolve(body);
+                resolve(JSON.parse(body));
             }
         });
     });
@@ -302,6 +302,8 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
         // Get tracks in the playlist
         let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
         playlistTracks.then((res) => {
+            console.log(res);
+
             // Make array of URIs
             console.log("CREATING ARRAY OF TRACKS");
             var del_tracks = '{"tracks":[';

@@ -311,7 +311,7 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
                 if (i > 0) {
                     del_tracks += ',';
                 }
-                del_tracks += '"uri":"' + res.tracks.items[i].uri + '"}';
+                del_tracks += '"uri":"' + res.tracks.items[i].track.uri + '"}';
             }
             del_tracks += ']}';
             console.log(del_tracks);

@@ -180,6 +180,24 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
     });
 };
 
+// Returns true if song's artist has below a certain number of followers
+// songURI: URI of the song to check
+// followerThreshold: integer maximum number of followers
+exports.isUnderground = function (songURI, followerThreshold, accessToken) {
+    var track = module.exports.getTrack(songURI, accessToken);
+    track.then((res) => {
+      var track_body = JSON.parse(res);
+      return track_body.artists[0].id;
+    })
+    .then((artist_id) => {
+        var track_artist = module.exports.getArtist(artist_id, accessToken);
+        track_artist.then((res) => {
+          var artist_body = JSON.parse(res);
+          return artist_body.followers.total < followerThreshold;
+        })
+    })
+  };
+
 // Populates a playlist with tracks
 // playlistID: spotify ID of the playlist being modified
 // tracks: array of track URIs
@@ -204,24 +222,6 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
         //console.log(body);
         return body;
     });
-};
-
-// Returns true if song's artist has below a certain number of followers
-// songURI: URI of the song to check
-// followerThreshold: integer maximum number of followers
-exports.isUnderground = function (songURI, followerThreshold, accessToken) {
-  var track = module.exports.getTrack(songURI, accessToken);
-  track.then((res) => {
-    var track_body = JSON.parse(res);
-    return track_body.artists[0].id;
-  })
-  .then((artist_id) => {
-      var track_artist = module.exports.getArtist(artist_id, accessToken);
-      track_artist.then((res) => {
-        var artist_body = JSON.parse(res);
-        return artist_body.followers.total < followerThreshold;
-      })
-  })
 };
 
 // Fetches catalog information of a track

@@ -54,7 +54,7 @@ exports.getTopTracks = async function (userID, accessToken) {
 //      with up to 5 total objects split across those three categories
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
-    var append = "limit=100";
+    var append = "limit=50";
     console.log(seeds);
     if (seeds.seed_artists != "") {
         if (append.length > 0) {

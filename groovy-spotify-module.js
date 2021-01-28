@@ -272,57 +272,67 @@ exports.getArtist = async function (artistID, accessToken){
     });
 };
 
+// Finds and returns a playlist object based on a given ID
+// accessToken: security token allowing access to the web api
+// playlistID
+exports.getPlaylist = async function (accessToken, playlistID) {
+    var cur_track_options = {
+        url: 'https://api.spotify.com/v1/playlists/' + playlistID,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }
+    }
+    return new Promise((resolve, reject) => {
+        request.get(cur_track_options, function(error, response, body) {
+            if (error) {
+                reject(response.statusCode);
+            }
+            else {
+                resolve(body);
+            }
+        });
+    });
+}
+
 // Deletes all songs in a playlist
 // accessToken: security token allowing access to the web api
 // playlistID
 exports.clearPlaylist = async function (accessToken, playlistID) {
     return new Promise((resolve, reject) => {
         // Get tracks in the playlist
-        console.log("OBTAINING EXISTING TRACKS");
-        var cur_track_options = {
-            url: 'https://api.spotify.com/v1/playlists/' + playlistID,
-            headers: {
+        let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
+        playlistTracks.then((res) => {
+            // Make array of URIs
+            console.log("CREATING ARRAY OF TRACKS");
+            var del_tracks = '{"tracks":[';
+            for (var i = 0; i < res.items.length; i++) {
+                if (i > 0) {
+                    del_tracks += ',';
+                }
+                del_tracks += '"uri":"' + res.items[i].uri + '"}';
+            }
+            del_tracks += ']}';
+            console.log(del_tracks);
+
+            // Send DELETE request
+            console.log("SENDING DELETE REQUEST");
+            var clear_options = {
+                url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks',
+                headers: {
                 'Authorization': 'Bearer ' + accessToken
+                },
+                data: del_tracks
             }
-        }
-        var cur_tracks; 
-        request.get(cur_track_options, function(error, response, body) {
-            console.log(response);
-            cur_tracks = JSON.parse(body);
-        });
-        console.log("RESPONSE:");
-        console.log(cur_tracks);
-
-        // Make array of URIs
-        console.log("CREATING ARRAY OF TRACKS");
-        var del_tracks = '{"tracks":[';
-        for (var i = 0; i < cur_tracks.items.length; i++) {
-            if (i > 0) {
-                del_tracks += ',';
-            }
-            del_tracks += '"uri":"' + cur_tracks.items[i].uri + '"}';
-        }
-        del_tracks += ']}';
-        console.log(del_tracks);
-
-        // Send DELETE request
-        console.log("SENDING DELETE REQUEST");
-        var clear_options = {
-            url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks',
-            headers: {
-            'Authorization': 'Bearer ' + accessToken
-            },
-            data: del_tracks
-        }
-        request.delete(clear_options, function(error, response, body) {
-            if (error) {
-                console.log(response.statusCode);
-                reject(response.statusCode);
-            }
-            else {
-                console.log(body);
-                resolve(body);
-            }
+            request.delete(clear_options, function(error, response, body) {
+                if (error) {
+                    console.log(response.statusCode);
+                    reject(response.statusCode);
+                }
+                else {
+                    console.log(body);
+                    resolve(body);
+                }
+            });
         });
     });
 };

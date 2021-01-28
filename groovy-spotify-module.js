@@ -307,11 +307,11 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
             // Make array of URIs
             console.log("CREATING ARRAY OF TRACKS");
             var del_tracks = '{"tracks":[';
-            for (var i = 0; i < res.items.length; i++) {
+            for (var i = 0; i < res.tracks.items.length; i++) {
                 if (i > 0) {
                     del_tracks += ',';
                 }
-                del_tracks += '"uri":"' + res.items[i].uri + '"}';
+                del_tracks += '"uri":"' + res.tracks.items[i].uri + '"}';
             }
             del_tracks += ']}';
             console.log(del_tracks);

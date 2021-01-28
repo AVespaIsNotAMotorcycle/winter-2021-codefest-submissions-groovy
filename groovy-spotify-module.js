@@ -143,6 +143,9 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                             resolve(body.items[i].id);
                             return;
                         }
+                        else {
+                            console.log("no match");
+                        }
                     }
                 }
                 resolve("false");

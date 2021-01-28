@@ -103,6 +103,16 @@ exports.isPlaylistGroovy = function (playlistID) {
     const lines = data.split('\n');
 
     // search all lines
+    for (var i = 0; i < lines.length; i++) {
+        if (line == playlistID) {
+            console.log("MATCH");
+            return true;
+        }
+    }
+    return false;
+
+    /*
+    // search all lines
     var test = lines.forEach((line) => {
         console.log(line.length + " : " + playlistID.length + " || " + line);
         if (line == playlistID) {
@@ -112,7 +122,7 @@ exports.isPlaylistGroovy = function (playlistID) {
     });
     console.log("test: " + test);
 
-    return false;
+    return false; */
 }
 
 // Checks if a user has a playlist with a given name

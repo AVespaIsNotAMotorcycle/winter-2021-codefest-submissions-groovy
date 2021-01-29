@@ -200,7 +200,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
         }
         request.get(options, function(error, response, body) {
             console.log("-------------IS UNDERGROUND----------------");
-            console.log(body);
+            console.log(response);
             if (error) {
                 console.log(error);
                 console.log(response);

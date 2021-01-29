@@ -185,27 +185,37 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 };
 
 // Returns true if song's artist has below a certain number of followers
-// songURI: URI of the song to check
+// artistIDs: IDs of the artist's to check
 // followerThreshold: integer maximum number of followers
-exports.isUnderground = async function (songURI, followerThreshold, accessToken) {
+exports.isUnderground = async function (artistIDs, followerThreshold, accessToken) {
     return new Promise((resolve, reject) => {
-        var track = module.exports.getTrack(songURI.substring(14,36), accessToken);
-        track.then((res) => {
-          var track_body = JSON.parse(res);
-          return track_body.artists[0].id;
-        })
-        .then((artist_id) => {
-            var track_artist = module.exports.getArtist(artist_id, accessToken);
-            track_artist.then((res) => {
-              var artist_body = JSON.parse(res);
-              if (artist_body.followers.total < followerThreshold) {
-                  resolve (songURI);
-              }
-              else {
-                  resolve(false);
-              }
-            })
-        })
+        var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
+        for (var i = 1; i < artistIDs.length; i++) {
+            address += '%' + artistIDs[i];
+        }
+        var options = {
+            url: address,
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            json: true
+        }
+        request.get(options, function(error, response, body) {
+            if (error) {
+                console.log(error);
+                console.log(response);
+                console.log(body);
+                reject(response.statusCode);
+            }
+            else {
+                var jsonBody = JSON.parse(body);
+                var toReturn = [];
+                for (var i = 0; i < jsonBody.artists.length; i++) {
+                    if (jsonBody.artists[i].followers.total < followerThreshold) {
+                        toReturn.push(jsonBody.artists[i]);
+                    }
+                }
+                resolve(toReturn);
+            }
+        });
     });
   };
 
@@ -390,68 +400,82 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 var rec_tracks = res;//JSON.parse(res);
                 console.log(rec_tracks);
 
-                // Check if Groovy playlist exists
-                console.log("Checking log")
-                let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');
+                var recArtists = [];
+                for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                    recArtists.push(rec_tracks.tracks[i].artists[0].id);
+                }
+                let recsAreUnderground = isUnderground(recArtists, 15000, accessToken);
+                recsAreUnderground.then((res) => {
+                    var undergroundRecs = [];
+                    for (var i = 0; i < rec_tracks.tracks.length; i++) {
+                        for (var j = 0; i < res.artists.length; i++) {
+                            if (rec_tracks.tracks[i].artists[0].id == res.artists[j].id) {
+                                undergroundRecs.push(rec_tracks.tracks[i]);
+                            }
+                        } 
+                    } 
+                    // Check if Groovy playlist exists
+                    console.log("Checking log")
+                    let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');
 
-                playlistExists.then((res) => {
+                    playlistExists.then((res) => {
 
-                    // No such playlist exists
-                    if (res == "false") {
-                        console.log("No existing playlist");
+                        // No such playlist exists
+                        if (res == "false") {
+                            console.log("No existing playlist");
 
-                        // Create playlist
-                        var playlistInfo = {
-                            name: "Groovy",
-                            description: "",
-                            public: false
-                        };
-                        let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
+                            // Create playlist
+                            var playlistInfo = {
+                                name: "Groovy",
+                                description: "",
+                                public: false
+                            };
+                            let playlist = module.exports.createPlaylist(playlistInfo, userID, accessToken);
 
-                        playlist.then((res) => {
-                            console.log("Created playlist");
-                            playlist_res = res;
-                            
-                            // Log playlist ID
-                            fs.appendFile('playlist_log.txt', playlist_res.id + '\n', (err) => {
-                                if (err) {
-                                    throw err;
+                            playlist.then((res) => {
+                                console.log("Created playlist");
+                                playlist_res = res;
+                                
+                                // Log playlist ID
+                                fs.appendFile('playlist_log.txt', playlist_res.id + '\n', (err) => {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    console.log("Log is updated.");
+                                });
+
+                                // Populate playlist with recommendations
+                                var rec_s = [];
+                                for (var i = 0; i < undergroundRecs.length; i++) {
+                                    rec_s.push(undergroundRecs[i].uri)
                                 }
-                                console.log("Log is updated.");
+                                module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+
+                                resolve(playlist_res.id);
+
                             });
+                        }
+                        // If that playlist does exist
+                        else {
+                            console.log("Updating Existing playlists");
+
+                            var plID = res;
+
+                            // Clear playlist
+                            module.exports.clearPlaylist(accessToken, plID);
 
                             // Populate playlist with recommendations
                             var rec_s = [];
-                            for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                                rec_s.push(rec_tracks.tracks[i].uri)
+                            for (var i = 0; i < undergroundRecs.length; i++) {
+                                rec_s.push(undergroundRecs[i].uri)
                             }
-                            module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
+                            module.exports.addToPlaylist(plID, rec_s, accessToken);
 
-                            resolve(playlist_res.id);
-
-                        });
-                    }
-                    // If that playlist does exist
-                    else {
-                        console.log("Updating Existing playlists");
-
-                        var plID = res;
-
-                        // Clear playlist
-                        module.exports.clearPlaylist(accessToken, plID);
-
-                        // Populate playlist with recommendations
-                        var rec_s = [];
-                        for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                            rec_s.push(rec_tracks.tracks[i].uri)
+                            resolve(plID);
                         }
-                        module.exports.addToPlaylist(plID, rec_s, accessToken);
 
-                        resolve(plID);
-                    }
-
+                    });
                 });
-
             });
 
         });

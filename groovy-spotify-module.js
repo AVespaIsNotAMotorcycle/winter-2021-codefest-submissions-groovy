@@ -388,7 +388,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
             recommendations.then((res) => {
                 console.log("Got recommendations");
                 var rec_tracks = res;//JSON.parse(res);
-                //console.log(rec_tracks);
+                console.log(rec_tracks);
 
                 // Check if Groovy playlist exists
                 console.log("Checking log")

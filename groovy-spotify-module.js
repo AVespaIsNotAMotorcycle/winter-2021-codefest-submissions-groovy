@@ -190,12 +190,17 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 exports.isUnderground = async function (artistIDs, followerThreshold, accessToken) {
     return new Promise((resolve, reject) => {
         // Write address
-        var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
+        /*var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
         for (var i = 1; i < artistIDs.length; i++) {
             address += '%' + artistIDs[i];
+        }*/
+        var queryData = artistIDs[0];
+        for (var i = 1; i < artistIDs.length; i++) {
+            queryData += ',' + artistIDs[i];
         }
         var options = {
-            url: address,
+            url: "https://api.spotify.com/v1/artists",
+            query: queryData,
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }

@@ -200,6 +200,8 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }
+        console.log("isUnderground options");
+        console.log(options);
         request.get(options, function(error, response, body) {
             if (error) {
                 console.log(error);

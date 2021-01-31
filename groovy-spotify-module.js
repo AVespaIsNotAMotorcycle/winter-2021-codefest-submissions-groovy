@@ -199,9 +199,9 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
             json: true
         }
         request.get(options, function(error, response, body) {
-            console.log("-------------IS UNDERGROUND----------------");
-            console.log(error);
-            console.log(response);
+            //console.log("-------------IS UNDERGROUND----------------");
+            //console.log(error);
+            //console.log(response);
             if (error) {
                 console.log(error);
                 console.log(response);
@@ -402,8 +402,6 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 console.log("Got recommendations");
                 var rec_tracks = res;//JSON.parse(res);
                 console.log(rec_tracks.tracks[0].artists);
-
-                reject();
 
                 var recArtists = [];
                 for (var i = 0; i < rec_tracks.tracks.length; i++) {

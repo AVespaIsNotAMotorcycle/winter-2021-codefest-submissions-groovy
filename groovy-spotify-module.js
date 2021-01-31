@@ -55,7 +55,7 @@ exports.getTopTracks = async function (userID, accessToken) {
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
     var append = "limit=50";
-    console.log(seeds);
+    //console.log(seeds);
     if (seeds.seed_artists != "") {
         if (append.length > 0) {
             append += '&';
@@ -83,8 +83,8 @@ exports.getRecommendations = async function (seeds, accessToken) {
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };
-    console.log("Retrieving recommendations");
-    console.log(options);
+    //console.log("Retrieving recommendations");
+    //console.log(options);
     return new Promise((resolve, reject) => {
         request.get(options, function(error, response, body) {
             if (error) {
@@ -404,6 +404,9 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                         recArtists.push(rec_tracks.tracks[i].artists[0].id);
                     }
                 }
+
+                console.log("REC ARTISTS");
+                console.log(recArtists);
 
                 let recsAreUnderground = module.exports.isUnderground(recArtists, 15000, accessToken);
                 recsAreUnderground.then((res) => {

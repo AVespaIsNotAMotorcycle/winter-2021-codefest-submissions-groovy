@@ -401,7 +401,9 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
             recommendations.then((res) => {
                 console.log("Got recommendations");
                 var rec_tracks = res;//JSON.parse(res);
-                console.log(rec_tracks);
+                console.log(rec_tracks.tracks[0].artists);
+
+                reject();
 
                 var recArtists = [];
                 for (var i = 0; i < rec_tracks.tracks.length; i++) {

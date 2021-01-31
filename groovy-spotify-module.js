@@ -184,24 +184,23 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
     });
 };
 
-// Returns true if song's artist has below a certain number of followers
-// artistIDs: IDs of the artist's to check
+// Returns array of artists whose folower count is below followerThreshold
+// artistIDs: array of artist IDs
 // followerThreshold: integer maximum number of followers
 exports.isUnderground = async function (artistIDs, followerThreshold, accessToken) {
     return new Promise((resolve, reject) => {
-        var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
+        // Write address
+        /*var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
         for (var i = 1; i < artistIDs.length; i++) {
             address += '%' + artistIDs[i];
-        }
+        }*/
         var options = {
-            url: address,
+            url: "https://api.spotify.com/v1/artists",
+            body: artistIDs,
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }
         request.get(options, function(error, response, body) {
-            //console.log("-------------IS UNDERGROUND----------------");
-            //console.log(error);
-            //console.log(response);
             if (error) {
                 console.log(error);
                 console.log(response);
@@ -209,6 +208,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                 reject(response.statusCode);
             }
             else {
+                console.log(body);
                 var jsonBody = JSON.parse(body);
                 var toReturn = [];
                 for (var i = 0; i < jsonBody.artists.length; i++) {
@@ -380,11 +380,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
         top_tracks.then((res) => {
             console.log("Got top tracks");
-            var t_tracks = JSON.parse(res);
-            //console.log(t_tracks);
-
-            top_tracks_body = JSON.parse(res);
-            //console.log(res);
+            var top_tracks_body = JSON.parse(res);
 
             // Get recommendations, use top tracks as seed
             var seeds = {
@@ -400,13 +396,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
             recommendations.then((res) => {
                 console.log("Got recommendations");
-                var rec_tracks = res;//JSON.parse(res);
-                console.log(rec_tracks.tracks[0].artists);
+                var rec_tracks = res;
 
-                var recArtists = [];
-                for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                    recArtists.push(rec_tracks.tracks[i].artists[0].id);
-                }
                 let recsAreUnderground = module.exports.isUnderground(recArtists, 15000, accessToken);
                 recsAreUnderground.then((res) => {
                     var undergroundRecs = [];

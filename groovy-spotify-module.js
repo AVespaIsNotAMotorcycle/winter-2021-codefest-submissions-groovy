@@ -200,7 +200,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
             queryData += ',' + artistIDs[i];
         }
         var options = {
-            url: address,
+            url: "https://api.spotify.com/v1/artists",
             ids: queryData,
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true

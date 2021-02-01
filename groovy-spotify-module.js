@@ -476,10 +476,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                             console.log(res);
 
-                            console.log("res.tracks.length - 20: " + (res.tracks.length - 20));
+                            console.log("res.tracks.length - 20: " + (res.tracks.total - 20));
 
                             // Clear playlist
-                            module.exports.clearPlaylist(accessToken, plID, res.tracks.length - 20);
+                            module.exports.clearPlaylist(accessToken, plID, res.tracks.total - 20);
 
                             // Populate playlist with recommendations
                             var rec_s = [];

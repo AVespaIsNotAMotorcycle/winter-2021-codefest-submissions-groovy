@@ -327,7 +327,7 @@ exports.clearPlaylist = async function (accessToken, playlistID, clearNumber = -
         let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
         playlistTracks.then((res) => {
             console.log("CURRENT TRACKS ON PLAYLIST:");
-            console.log(res.tracks);
+            //console.log(res.tracks);
 
             if (clearNumber < 0) {
                 clearNumber = res.tracks.length;

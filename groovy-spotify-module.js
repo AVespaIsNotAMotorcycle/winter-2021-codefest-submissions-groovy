@@ -466,9 +466,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                                 if (rec_s.length < 20) {
                                     let recurs = module.exports.createGroovyPlaylist(userID, accessToken);
-                                    recurs.then((res) => {
-                                        resolve(res);
-                                    });
+                                    //recurs.then((res) => {
+                                    //    resolve(res);
+                                    //});
+                                    resolve(playlist_res.id);
                                 }
                                 else {
                                     resolve(playlist_res.id);
@@ -498,9 +499,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                             if (rec_s.length + res.tracks.total < 20) {
                                 let recurs = module.exports.createGroovyPlaylist(userID, accessToken);
-                                recurs.then((res) => {
-                                    resolve(res);
-                                });
+                                //recurs.then((res) => {
+                                //    resolve(res);
+                                //});
+                                resolve(playlist_res.id);
                             }
                             else {
                                 resolve(playlist_res.id);

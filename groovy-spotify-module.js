@@ -504,11 +504,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                 //recurs.then((res) => {
                                 //    resolve(res);
                                 //});
-                                console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
+                                console.log("RETURNING PLAYLIST ID: " + plID);
                                 resolve(plID);
                             }
                             else {
-                                console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
+                                console.log("RETURNING PLAYLIST ID: " + plID);
                                 resolve(plID);
                             }
                         }

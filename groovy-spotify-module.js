@@ -485,7 +485,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                             var plID = res.id;
 
-                            console.log(res);
+                            //console.log(res);
 
                             console.log("res.tracks.length - 20: " + (res.tracks.total - 20));
 

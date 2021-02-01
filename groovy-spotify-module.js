@@ -505,11 +505,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                 //    resolve(res);
                                 //});
                                 console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
-                                resolve(playlist_res.id);
+                                resolve(plID);
                             }
                             else {
                                 console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
-                                resolve(playlist_res.id);
+                                resolve(plID);
                             }
                         }
 

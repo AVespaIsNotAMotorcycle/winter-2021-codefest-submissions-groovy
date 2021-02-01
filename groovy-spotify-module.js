@@ -191,17 +191,17 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
     return new Promise((resolve, reject) => {
         console.log("# of artist ids: " + artistIDs.length);
         // Write address
-        var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
-        for (var i = 1; i < artistIDs.length; i++) {
-            address += '%' + artistIDs[i];
-        }
-        var queryData = artistIDs[0];
-        for (var i = 1; i < artistIDs.length; i++) {
-            queryData += ',' + artistIDs[i];
-        }
+        var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs.join(',');
+        //for (var i = 1; i < artistIDs.length; i++) {
+        //    address += '%' + artistIDs[i];
+        //}
+        //var queryData = artistIDs[0];
+        //for (var i = 1; i < artistIDs.length; i++) {
+        //    queryData += ',' + artistIDs[i];
+        //}
         var options = {
             url: "https://api.spotify.com/v1/artists",
-            params: { ids: artistIDs.join(',') },
+        //    params: { ids: artistIDs.join(',') },
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }

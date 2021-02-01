@@ -465,10 +465,14 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                 module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
 
                                 if (rec_s.length < 20) {
-                                    createGroovyPlaylist(userID, accessToken);
+                                    let recurs = createGroovyPlaylist(userID, accessToken);
+                                    recurs.then((res) => {
+                                        resolve(res);
+                                    });
                                 }
-
-                                resolve(playlist_res.id);
+                                else {
+                                    resolve(playlist_res.id);
+                                }
 
                             });
                         }

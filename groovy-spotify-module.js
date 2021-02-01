@@ -201,7 +201,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
         }
         var options = {
             url: address,
-            data: queryData,
+            //data: queryData,
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }

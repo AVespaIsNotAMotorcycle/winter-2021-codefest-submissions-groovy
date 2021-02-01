@@ -474,6 +474,8 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
 
                             var plID = res.id;
 
+                            console.log(res);
+
                             // Clear playlist
                             module.exports.clearPlaylist(accessToken, plID, res.tracks.length - 20);
 

@@ -189,6 +189,7 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // followerThreshold: integer maximum number of followers
 exports.isUnderground = async function (artistIDs, followerThreshold, accessToken) {
     return new Promise((resolve, reject) => {
+        console.log("# of artist ids: " + artistIDs.length);
         // Write address
         var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs[0];
         for (var i = 1; i < artistIDs.length; i++) {
@@ -214,7 +215,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                 reject(response.statusCode);
             }
             else {
-                console.log(response);
+                //console.log(response);
                 console.log(body);
                 var jsonBody = JSON.parse(body);
                 var toReturn = [];

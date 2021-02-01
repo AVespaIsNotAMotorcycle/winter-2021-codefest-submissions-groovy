@@ -410,7 +410,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     console.log(res);
                     var undergroundRecs = [];
                     for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                        for (var j = 0; i < res.length; i++) {
+                        for (var j = 0; j < res.length; j++) {
                             for (var k = 0; k < rec_tracks.tracks[i].artists.length; k++) {
                                 if (rec_tracks.tracks[i].artists[k].id == res[j].id) {
                                     console.log("UNDERGROUND SONG FOUND");

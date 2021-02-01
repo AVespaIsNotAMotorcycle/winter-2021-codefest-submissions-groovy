@@ -421,7 +421,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 recsAreUnderground.then((res) => {
                     var undergroundRecs = [];
                     for (var i = 0; i < rec_tracks.tracks.length; i++) {
-                        for (var j = 0; i < res.artists.length; i++) {
+                        for (var j = 0; i < res.length; i++) {
                             if (rec_tracks.tracks[i].artists[0].id == res.artists[j].id) {
                                 undergroundRecs.push(rec_tracks.tracks[i]);
                             }

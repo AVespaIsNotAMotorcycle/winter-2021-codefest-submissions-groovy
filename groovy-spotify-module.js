@@ -141,7 +141,7 @@ exports.findPlaylist = async function (userID, accessToken, playlistName) {
                         // check if it's made by groovy
                         var isGroovy = module.exports.isPlaylistGroovy(body.items[i].id);
                         if (isGroovy) {
-                            resolve(body.items[i].id);
+                            resolve(body);
                             return;
                         }
                     }
@@ -320,7 +320,7 @@ exports.getPlaylist = async function (accessToken, playlistID) {
 // Deletes all songs in a playlist
 // accessToken: security token allowing access to the web api
 // playlistID: Spotify ID of the playlist to be cleared
-exports.clearPlaylist = async function (accessToken, playlistID) {
+exports.clearPlaylist = async function (accessToken, playlistID, clearNumber = -1) {
     console.log("CLEARING PLAYLIST OF TRACKS");
     return new Promise((resolve, reject) => {
         // Get tracks in the playlist
@@ -329,10 +329,15 @@ exports.clearPlaylist = async function (accessToken, playlistID) {
             console.log("CURRENT TRACKS ON PLAYLIST:");
             console.log(res.tracks);
 
+            if (clearNumber < 0) {
+                clearNumber = res.tracks.length;
+            }
+            console.log("CLEARNUMBER: " + clearNumber);
+
             // Make array of URIs
             console.log("CREATING ARRAY OF TRACKS");
             var del_tracks = '{"tracks":[';
-            for (var i = 0; i < res.tracks.items.length; i++) {
+            for (var i = 0; i < res.tracks.items.length && i < clearNumber ; i++) {
                 if (i > 0) {
                     del_tracks += ',';
                 }
@@ -467,10 +472,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                         else {
                             console.log("Updating Existing playlists");
 
-                            var plID = res;
+                            var plID = res.items[i].id;
 
                             // Clear playlist
-                            module.exports.clearPlaylist(accessToken, plID);
+                            module.exports.clearPlaylist(accessToken, plID, res.tracks.length - 20);
 
                             // Populate playlist with recommendations
                             var rec_s = [];

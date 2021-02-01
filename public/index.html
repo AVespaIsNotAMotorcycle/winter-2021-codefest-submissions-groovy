@@ -146,7 +146,7 @@
 
                     recsPlaylistPlaceholder.innerHTML = recsPlaylistTemplate(pl);
 
-                    document.getElementById('playlist-embed').contentDocument.location.reload(true);
+                    document.getElementById('playlist-embed').src = document.getElementById('playlist-embed').src;
                 
               });
             }, false);

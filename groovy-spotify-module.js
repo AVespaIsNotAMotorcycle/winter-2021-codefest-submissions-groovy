@@ -216,7 +216,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
             }
             else {
                 console.log(response.statusCode);
-                console.log(body);
+                //console.log(body);
                 var jsonBody = JSON.parse(body);
                 var toReturn = [];
                 for (var i = 0; i < jsonBody.artists.length; i++) {
@@ -224,6 +224,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                         toReturn.push(jsonBody.artists[i]);
                     }
                 }
+                console.log(toReturn);
                 resolve(toReturn);
             }
         });

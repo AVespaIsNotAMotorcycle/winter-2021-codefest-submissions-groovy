@@ -236,32 +236,19 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
 // tracks: array of track URIs
 // accessToken: security token allowing access to the web api
 exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
-    console.log("ADDING TRACKS TO PLAYLIST");
-    console.log("CHECKING SONG ARTIST LISTERNER COUNT");
-    for (var i = 0; i < tracks.length; i++) {
-        let isUnder = module.exports.isUnderground(tracks[i], 15000, accessToken);
-        isUnder.then((res) => {
-            if (res != false) {
-                console.log("TRACK IS UNDERGROUND");
-                s_options = {
-                    url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?'
-                      + 'uris=' + res,
-                    headers: {
-                      'Authorization': 'Bearer ' + accessToken,
-                      'Content-Type': 'application/json',
-                    }
-                }
-                console.log(s_options);
-                request.post(s_options, function(error, response, body) {
-                    console.log(body);
-                    return body;
-                });
-            }
-            else {
-                console.log("TRACK NOT UNDERGROUND");
-            }
-        });
+    s_options = {
+        url: 'https://api.spotify.com/v1/playlists/' + playlistID + '/tracks?'
+          + 'uris=' + tracks.join(','),
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json',
+        }
     }
+    console.log(s_options);
+    request.post(s_options, function(error, response, body) {
+        console.log(body);
+        return body;
+    });
 };
 
 // Fetches catalog information of a track

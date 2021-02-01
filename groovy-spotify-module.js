@@ -215,7 +215,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                 reject(response.statusCode);
             }
             else {
-                //console.log(response);
+                console.log(response.statusCode);
                 console.log(body);
                 var jsonBody = JSON.parse(body);
                 var toReturn = [];

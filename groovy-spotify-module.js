@@ -469,9 +469,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                     //recurs.then((res) => {
                                     //    resolve(res);
                                     //});
+                                    console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
                                     resolve(playlist_res.id);
                                 }
                                 else {
+                                    console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
                                     resolve(playlist_res.id);
                                 }
 
@@ -502,9 +504,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                 //recurs.then((res) => {
                                 //    resolve(res);
                                 //});
+                                console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
                                 resolve(playlist_res.id);
                             }
                             else {
+                                console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
                                 resolve(playlist_res.id);
                             }
                         }

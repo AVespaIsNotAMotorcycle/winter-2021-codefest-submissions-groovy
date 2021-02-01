@@ -411,9 +411,11 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     var undergroundRecs = [];
                     for (var i = 0; i < rec_tracks.tracks.length; i++) {
                         for (var j = 0; i < res.length; i++) {
-                            if (rec_tracks.tracks[i].artists[0].id == res[j].id) {
-                                console.log("UNDERGROUND SONG FOUND");
-                                undergroundRecs.push(rec_tracks.tracks[i]);
+                            for (var k = 0; k < rec_tracks.tracks[i].artists.length; k++) {
+                                if (rec_tracks.tracks[i].artists[k].id == res[j].id) {
+                                    console.log("UNDERGROUND SONG FOUND");
+                                    undergroundRecs.push(rec_tracks.tracks[i]);
+                                }
                             }
                         } 
                     } 

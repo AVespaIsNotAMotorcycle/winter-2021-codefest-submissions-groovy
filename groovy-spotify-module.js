@@ -414,6 +414,9 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                             }
                         } 
                     } 
+                    console.log("-----------Only Underground Remaining---------------");
+                    console.log(undergroundRecs);
+
                     // Check if Groovy playlist exists
                     console.log("Checking log")
                     let playlistExists = module.exports.findPlaylist(userID, accessToken, 'Groovy');

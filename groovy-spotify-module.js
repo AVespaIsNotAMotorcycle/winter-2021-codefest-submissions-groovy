@@ -416,7 +416,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                 console.log("REC ARTISTS");
                 console.log(recArtists);
 
-                let recsAreUnderground = module.exports.isUnderground(recArtists, 15000, 15000);
+                let recsAreUnderground = module.exports.isUnderground(recArtists, 15000, accessToken);
                 recsAreUnderground.then((res) => {
                     var undergroundRecs = [];
                     for (var i = 0; i < rec_tracks.tracks.length; i++) {

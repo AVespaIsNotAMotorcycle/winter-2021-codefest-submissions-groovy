@@ -10,6 +10,14 @@
 - [ ] We are a Daedalus Google Mentorship group
 - [ ] We are a beginner group (only completed CSCI 12700)
 
+### Project
+
+<groovy.samuelmebersole.com>
+This project uses the Spotify Web API to create a playlist of recommended songs based on recent listening. However, the songs are all from artists with below 15,000 followers. There are a couple issues:
+    -   Duplicates are often present
+    -   The embed will sometimes only display part of the playlist
+This is because the change to a minimum of 20 songs in the playlist was last minute, and is done by simply calling the same function repeatedly. At the moment, it doesn't check for duplicates, and the embed is rendered when the first call finishes.
+
 # General Info
 ## Theme: Create a Passion Project - Make something you've always wanted to build!
 Think of something you've always wanted to make and bring to life, and do it! To make it easier for our judges and to have some form of organization, all we ask is to try to keep it within one of these categories:

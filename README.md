@@ -13,6 +13,7 @@
 ### Project
 
 <groovy.samuelmebersole.com>
+
 This project uses the Spotify Web API to create a playlist of recommended songs based on recent listening. However, the songs are all from artists with below 15,000 followers. There are a couple issues:
     -   Duplicates are often present
     -   The embed will sometimes only display part of the playlist

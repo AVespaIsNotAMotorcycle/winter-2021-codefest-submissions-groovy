@@ -4,7 +4,7 @@ const { resolve } = require('path');
 
 // Fetches the top artists of a user
 // accessToken: security token allowing access to the web api
-exports.getTopArtists = async function (userID, accessToken) {
+exports.getTopArtists = async function (accessToken) {
     var top_artists_options = {
         url: 'https://api.spotify.com/v1/me/top/artists',
         headers: {
@@ -25,7 +25,7 @@ exports.getTopArtists = async function (userID, accessToken) {
 
 // Fetches the top tracks of a user
 // accessToken: security token allowing access to the web api
-exports.getTopTracks = async function (userID, accessToken) {
+exports.getTopTracks = async function (accessToken) {
     var top_tracks_options = {
         url: 'https://api.spotify.com/v1/me/top/tracks',
         headers: {
@@ -54,27 +54,23 @@ exports.getTopTracks = async function (userID, accessToken) {
 //      with up to 5 total objects split across those three categories
 // accessToken: security token allowing access to the web api
 exports.getRecommendations = async function (seeds, accessToken) {
-    var append = "limit=50";
-    //console.log(seeds);
+    var append = "limit=50";                            // Amount of tracks to fetch. Later calls are limited to 50, we only fetch 50
     if (seeds.seed_artists != "") {
         if (append.length > 0) {
             append += '&';
         }
-        //console.log(seeds.seed_artists);
         append += "seed_artists=" + seeds.seed_artists;
     }
     if (seeds.seed_genres != "") {
         if (append.length > 0) {
             append += '&';
         }
-        //console.log(seeds.seed_genres);
         append += "seed_genres=" + seeds.seed_genres;
     }
     if (seeds.seed_tracks != "") {
         if (append.length > 0) {
             append += '&';
         }
-        //console.log(seeds.seed_tracks);
         append += "seed_tracks=" + seeds.seed_tracks;
     }
 
@@ -83,8 +79,7 @@ exports.getRecommendations = async function (seeds, accessToken) {
         headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
     };
-    //console.log("Retrieving recommendations");
-    //console.log(options);
+
     return new Promise((resolve, reject) => {
         request.get(options, function(error, response, body) {
             if (error) {
@@ -189,24 +184,13 @@ exports.createPlaylist = async function (playlistInfo, userID, accessToken) {
 // followerThreshold: integer maximum number of followers
 exports.isUnderground = async function (artistIDs, followerThreshold, accessToken) {
     return new Promise((resolve, reject) => {
-        console.log("# of artist ids: " + artistIDs.length);
         // Write address
         var address = "https://api.spotify.com/v1/artists?ids=" + artistIDs.join(',');
-        //for (var i = 1; i < artistIDs.length; i++) {
-        //    address += '%' + artistIDs[i];
-        //}
-        //var queryData = artistIDs[0];
-        //for (var i = 1; i < artistIDs.length; i++) {
-        //    queryData += ',' + artistIDs[i];
-        //}
         var options = {
             url: address,
-        //    params: { ids: artistIDs.join(',') },
             headers: { 'Authorization': 'Bearer ' + accessToken },
             json: true
         }
-        console.log("isUnderground options");
-        console.log(options);
         request.get(options, function(error, response, body) {
             if (error) {
                 console.log(error);
@@ -215,8 +199,7 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                 reject(response.statusCode);
             }
             else {
-                console.log(response.statusCode);
-                //console.log(body);
+                // Return only artists that are below followerThreshold
                 var jsonBody = body;
                 var toReturn = [];
                 for (var i = 0; i < jsonBody.artists.length; i++) {
@@ -224,7 +207,6 @@ exports.isUnderground = async function (artistIDs, followerThreshold, accessToke
                         toReturn.push(jsonBody.artists[i]);
                     }
                 }
-                console.log(toReturn);
                 resolve(toReturn);
             }
         });
@@ -244,9 +226,7 @@ exports.addToPlaylist = async function (playlistID, tracks, accessToken) {
           'Content-Type': 'application/json',
         }
     }
-    console.log(s_options);
     request.post(s_options, function(error, response, body) {
-        console.log(body);
         return body;
     });
 };
@@ -320,19 +300,17 @@ exports.getPlaylist = async function (accessToken, playlistID) {
 // Deletes all songs in a playlist
 // accessToken: security token allowing access to the web api
 // playlistID: Spotify ID of the playlist to be cleared
+// clearNumber: number of tracks to remove
 exports.clearPlaylist = async function (accessToken, playlistID, clearNumber = -1) {
-    console.log("CLEARING PLAYLIST OF TRACKS");
     return new Promise((resolve, reject) => {
         // Get tracks in the playlist
         let playlistTracks = module.exports.getPlaylist(accessToken, playlistID);
         playlistTracks.then((res) => {
-            console.log("CURRENT TRACKS ON PLAYLIST:");
-            //console.log(res.tracks);
 
+            // If no positive number give, remove all tracks
             if (clearNumber < 0) {
                 clearNumber = res.tracks.length;
             }
-            console.log("CLEARNUMBER: " + clearNumber);
 
             // Make array of URIs
             console.log("CREATING ARRAY OF TRACKS");
@@ -357,11 +335,9 @@ exports.clearPlaylist = async function (accessToken, playlistID, clearNumber = -
             }
             request.delete(clear_options, function(error, response, body) {
                 if (error) {
-                    console.log(response.statusCode);
                     reject(response.statusCode);
                 }
                 else {
-                    console.log(body);
                     resolve(body);
                 }
             });
@@ -377,7 +353,7 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
     return new Promise((resolve, reject) => {
 
         // Get top tracks
-        let top_tracks = module.exports.getTopTracks(userID, accessToken);
+        let top_tracks = module.exports.getTopTracks(accessToken);
 
         top_tracks.then((res) => {
             console.log("Got top tracks");
@@ -406,26 +382,19 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                     }
                 }
 
-                console.log("REC ARTISTS");
-                console.log(recArtists);
-
                 let recsAreUnderground = module.exports.isUnderground(recArtists, 15000, accessToken);
                 recsAreUnderground.then((res) => {
-                    console.log("-----------Underground Artists---------------");
-                    console.log(res);
+                    console.log("Eliminated popular artists");
                     var undergroundRecs = [];
                     for (var i = 0; i < rec_tracks.tracks.length; i++) {
                         for (var j = 0; j < res.length; j++) {
                             for (var k = 0; k < rec_tracks.tracks[i].artists.length; k++) {
                                 if (rec_tracks.tracks[i].artists[k].id == res[j].id) {
-                                    console.log("UNDERGROUND SONG FOUND");
                                     undergroundRecs.push(rec_tracks.tracks[i]);
                                 }
                             }
                         } 
                     } 
-                    console.log("-----------Only Underground Remaining---------------");
-                    console.log(undergroundRecs);
 
                     // Check if Groovy playlist exists
                     console.log("Checking log")
@@ -465,15 +434,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                                 module.exports.addToPlaylist(playlist_res.id, rec_s, accessToken);
 
                                 if (rec_s.length < 20) {
-                                    /*let recurs = */module.exports.createGroovyPlaylist(userID, accessToken);
-                                    //recurs.then((res) => {
-                                    //    resolve(res);
-                                    //});
-                                    console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
+                                    module.exports.createGroovyPlaylist(userID, accessToken);
                                     resolve(playlist_res.id);
                                 }
                                 else {
-                                    console.log("RETURNING PLAYLIST ID: " + playlist_res.id);
                                     resolve(playlist_res.id);
                                 }
 
@@ -484,10 +448,6 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                             console.log("Updating Existing playlists");
 
                             var plID = res.id;
-
-                            //console.log(res);
-
-                            console.log("res.tracks.length - 20: " + (res.tracks.total - 20));
 
                             // Clear playlist
                             module.exports.clearPlaylist(accessToken, plID, res.tracks.total - 20);
@@ -500,15 +460,10 @@ exports.createGroovyPlaylist = async function (userID, accessToken) {
                             module.exports.addToPlaylist(plID, rec_s, accessToken);
 
                             if (rec_s.length + res.tracks.total < 20) {
-                                /*let recurs = */module.exports.createGroovyPlaylist(userID, accessToken);
-                                //recurs.then((res) => {
-                                //    resolve(res);
-                                //});
-                                console.log("RETURNING PLAYLIST ID: " + plID);
+                                module.exports.createGroovyPlaylist(userID, accessToken);
                                 resolve(plID);
                             }
                             else {
-                                console.log("RETURNING PLAYLIST ID: " + plID);
                                 resolve(plID);
                             }
                         }
